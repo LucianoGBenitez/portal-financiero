@@ -9,8 +9,8 @@
 
 ### Analista Contable
 
-**Tipo:** Interno / Externo / Sistema externo  
-**Por qué es clave:** _Justificación._
+**Tipo:** Interno  
+**Por qué es clave:** _Responsable de realizar la sincronización diaria de extractos bancarios. Su meta es validar que la informacion se refleje correctamente en la base de datos de SAP correspondiente por empresa y banco._
 
 ---
 
@@ -47,11 +47,11 @@
 
 | Stakeholder | Tipo | Nivel de impacto |
 |-------------|------|-----------------|
-|Personal Administrativo Contable |Interno | Alto / Medio / Bajo |
-|Analista Contable |Interno | Alto / Medio / Bajo |
-|Jefatura de Administración |Interno | Alto / Medio / Bajo |
-|Administrador de Infraestructura / Analista IT |Interno | Alto / Medio / Bajo |
-|Interbanking API Gateway |Sistema Externo | Alto / Medio / Bajo |
-|SAP Business One Service Layer | Sistema Externo | Alto / Medio / Bajo |
+|Personal Administrativo Contable | Interno | Alto |
+|Analista Contable | Interno | Alto |
+|Jefatura de Administración | Interno | Bajo |
+|Administrador de Infraestructura / Analista IT | `Interno | Medio |
+|Interbanking API Gateway |Sistema Externo | Alto |
+|SAP Business One Service Layer | Sistema Externo | Alto |
 
 ---
