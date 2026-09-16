@@ -6,7 +6,7 @@ _El Portal Financiero es una plataforma web corporativo diseñada para centraliz
 
 ## Requisitos funcionales
 
-### Módulo 1 — [Generación de Transferencias Masivas (TEF)]
+### Módulo 1 — Generación de Transferencias Masivas (TEF)
 
 | ID | Requisito |
 |----|-----------|
@@ -16,7 +16,7 @@ _El Portal Financiero es una plataforma web corporativo diseñada para centraliz
 | RF-04 | El sistema debe excluir automáticamente de la exportación final todas las filas que presenten errores validados en la previsualización.|
 | RF-05 | El sistema debe compilar los datos válidos y generar un archivo de texto de ancho fijo (240 caracteres) estructurado bajo las normativas del estándar de Interbanking.|
 
-### Módulo 2 — [Sincronización de Extractos Bancarios]
+### Módulo 2 — Sincronización de Extractos Bancarios
 
 | ID | Requisito |
 |----|-----------|
@@ -25,7 +25,7 @@ _El Portal Financiero es una plataforma web corporativo diseñada para centraliz
 | RF-08 | El sistema debe impactar automáticamente los movimientos confirmados en el libro de bancos de SAP Business One en sus respectivas columnas de débito o crédito. |
 | RF-09 | El sistema debe interrumpir el proceso de sincronización y anular el impacto si se detecta una pérdida de conexión con el ERP para evitar asientos duplicados parciales. |
 
-### Módulo 3 — [Sincronización de Datos Maestros (CBU)] 
+### Módulo 3 — Sincronización de Datos Maestros (CBU)
 
 | ID | Requisito |
 |----|-----------|
@@ -33,7 +33,7 @@ _El Portal Financiero es una plataforma web corporativo diseñada para centraliz
 | RF-11 | El sistema debe categorizar los resultados del cruce de datos en tres grupos: actualizaciones inmediatas, sugerencias por nombre y registros únicos. |
 | RF-12 | El sistema debe permitir la actualización masiva de los datos bancarios en el ERP de SAP desde la interfaz con un solo clic. |
 
-### Módulo 4 — [Seguridad y Auditoría] 
+### Módulo 4 — Seguridad y Auditoría 
 
 | ID | Requisito |
 |----|-----------|
