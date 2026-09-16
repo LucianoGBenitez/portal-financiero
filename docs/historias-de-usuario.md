@@ -59,39 +59,58 @@
 | Pequeña | Sí, con alcance acotado | Debe implementarse inicialmente para una cuenta y un tipo de extracto definido. |
 | Verificable | Sí | Puede probarse con movimientos válidos, errores de conexión y respuestas fallidas de SAP. |
 
-
-
-# Historias de usuario
-
-_Presentar al menos una historia de usuario representativa por módulo._
-_Cada historia debe incluir formato clásico, criterios de aceptación y validación INVEST._
-
----
-
-## HU-00 — [Nombre de la historia]
+## HU-03 — Sincronización de datos maestros (CBU)
 
 | Campo | Detalle |
 |-------|---------|
-| Historia | Como [rol], quiero [acción], para [objetivo]. |
-| Módulo | |
-| Requisitos relacionados | RF-XX, RF-XX |
+| Historia | Como analista contable, quiero contrastar el padrón bancario externo contra el maestro de socios de negocio de SAP y actualizar los datos bancarios detectados con un solo clic, para mantener los CBU de proveedores y clientes correctos sin cargarlos manualmente uno por uno. |
+| Módulo | Sincronización de Datos Maestros (CBU) |
+| Requisitos relacionados | RF-10, RF-11, RF-12 |
 
 ### Criterios de aceptación
 
-1. 
-2. 
-3. 
+1. El sistema contrasta automáticamente los registros del padrón bancario externo contra el maestro de socios de negocio de SAP.
+2. El sistema clasifica cada resultado del cruce en una de tres categorías: actualización inmediata (coincidencia exacta), sugerencia por nombre (coincidencia parcial) o registro único (sin coincidencia).
+3. El sistema presenta los resultados agrupados por categoría antes de aplicar cualquier cambio en SAP.
+4. El analista contable puede confirmar la actualización masiva de los datos bancarios en SAP con una sola acción.
+5. El sistema informa la cantidad de registros actualizados, sugeridos y no encontrados al finalizar el proceso.
 
 ### Validación INVEST
 
 | Criterio | ¿Se cumple? | Observación |
 |----------|-------------|-------------|
-| Independiente | | |
-| Negociable | | |
-| Valiosa | | |
-| Estimable | | |
-| Pequeña | | |
-| Verificable | | |
+| Independiente | Sí | No depende de la generación de TEF ni de la sincronización de extractos. |
+| Negociable | Sí | Los criterios de coincidencia (exacta/por nombre) pueden ajustarse con contabilidad. |
+| Valiosa | Sí | Evita la actualización manual de CBU uno por uno en SAP. |
+| Estimable | Sí | El alcance se limita a comparar, clasificar y actualizar el maestro. |
+| Pequeña | Sí | Se limita a un cruce y una actualización masiva por ejecución. |
+| Verificable | Sí | Puede probarse con coincidencias exactas, parciales y registros sin match. |
 
 ---
 
+## HU-04 — Autenticación y auditoría del sistema
+
+| Campo | Detalle |
+|-------|---------|
+| Historia | Como administrador IT, quiero que el sistema exija autenticación contra una lista blanca de cuentas autorizadas y registre una bitácora centralizada de cada operación crítica, para garantizar que solo personal autorizado opere el sistema y que cada acción quede trazada. |
+| Módulo | Seguridad y Auditoría |
+| Requisitos relacionados | RF-13, RF-14, RF-15 |
+
+### Criterios de aceptación
+
+1. El sistema exige autenticación antes de permitir el acceso a cualquier módulo funcional.
+2. El sistema valida al usuario autenticado contra una lista blanca explícita de cuentas autorizadas y rechaza el acceso a cualquier cuenta no incluida.
+3. El sistema registra en una bitácora centralizada cada archivo TEF generado y cada impacto de extracto procesado, incluyendo usuario, fecha/hora y resultado.
+4. El sistema registra el estado (Success/Error) y el mensaje técnico devuelto por SAP en cada actualización del maestro de proveedores.
+5. El administrador IT puede consultar el historial de operaciones registradas en la bitácora.
+
+### Validación INVEST
+
+| Criterio | ¿Se cumple? | Observación |
+|----------|-------------|-------------|
+| Independiente | Sí | Es transversal, pero puede desarrollarse y probarse por separado de los demás módulos. |
+| Negociable | Sí | El detalle de los campos de la bitácora puede ajustarse con IT. |
+| Valiosa | Sí | Protege el acceso al sistema y da trazabilidad ante auditorías. |
+| Estimable | Sí | El alcance se limita a autenticación, lista blanca y registro de bitácora. |
+| Pequeña | Sí | No incluye gestión de roles ni permisos granulares, solo acceso/no acceso. |
+| Verificable | Sí | Puede probarse con usuarios autorizados, no autorizados y fallos del ERP. |
