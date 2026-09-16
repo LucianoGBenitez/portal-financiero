@@ -7,12 +7,12 @@ skinparam packageStyle rectangle
 ' --- Actores ---
 actor "Personal Administrativo\nContable" as Administrativo
 actor "Analista\nContable" as Analista
-actor "Administrador\nIT" as AdminIT
+actor "Administrador de Infraestructura /\nAnalista IT" as AdminIT
 actor "Interbanking\nAPI Gateway" as Interbanking
 actor "SAP Business One\nService Layer" as SAP
-actor "Padrón bancario\nexterno" as Padron
+actor "Padrón bancario\nexterno (Interbanking)" as Padron
 actor "Servicio de\nWhatsApp" as WhatsApp
-actor "Gerente de\nFinanzas" as Gerente
+actor "Jefa de\nAdministración" as JefaAdmin
 
 ' --- Sistema ---
 rectangle "Portal Financiero" {
@@ -28,8 +28,8 @@ rectangle "Portal Financiero" {
 
 ' --- Relaciones actor-caso de uso ---
 Administrativo --> CU01
+Administrativo --> CU03
 Analista --> CU02
-Analista --> CU03
 AdminIT --> CU04
 AdminIT --> Audit
 Interbanking --> CU01
@@ -38,7 +38,7 @@ SAP --> CU02
 SAP --> CU03
 Padron --> CU03
 WhatsApp --> Notify
-Gerente --> Notify
+JefaAdmin --> Notify
 
 ' --- Relaciones obligatorias ---
 CU01 .> Auth : <<include>>
