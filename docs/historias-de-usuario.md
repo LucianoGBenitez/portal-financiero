@@ -63,7 +63,7 @@
 
 | Campo | Detalle |
 |-------|---------|
-| Historia | Como analista contable, quiero contrastar el padrón bancario externo contra el maestro de socios de negocio de SAP y actualizar los datos bancarios detectados con un solo clic, para mantener los CBU de proveedores y clientes correctos sin cargarlos manualmente uno por uno. |
+| Historia | Como personal administrativo contable, quiero contrastar el padrón bancario externo contra el maestro de socios de negocio de SAP y actualizar los datos bancarios detectados con un solo clic, para mantener los CBU de proveedores y clientes correctos sin cargarlos manualmente uno por uno. |
 | Módulo | Sincronización de Datos Maestros (CBU) |
 | Requisitos relacionados | RF-10, RF-11, RF-12 |
 
@@ -72,7 +72,7 @@
 1. El sistema contrasta automáticamente los registros del padrón bancario externo contra el maestro de socios de negocio de SAP.
 2. El sistema clasifica cada resultado del cruce en una de tres categorías: actualización inmediata (coincidencia exacta), sugerencia por nombre (coincidencia parcial) o registro único (sin coincidencia).
 3. El sistema presenta los resultados agrupados por categoría antes de aplicar cualquier cambio en SAP.
-4. El analista contable puede confirmar la actualización masiva de los datos bancarios en SAP con una sola acción.
+4. El personal administrativo contable puede confirmar la actualización masiva de los datos bancarios en SAP con una sola acción.
 5. El sistema informa la cantidad de registros actualizados, sugeridos y no encontrados al finalizar el proceso.
 
 ### Validación INVEST
@@ -92,7 +92,7 @@
 
 | Campo | Detalle |
 |-------|---------|
-| Historia | Como administrador IT, quiero que el sistema exija autenticación contra una lista blanca de cuentas autorizadas y registre una bitácora centralizada de cada operación crítica, para garantizar que solo personal autorizado opere el sistema y que cada acción quede trazada. |
+| Historia | Como administrador de infraestructura / analista IT, quiero que el sistema exija autenticación contra una lista blanca de cuentas autorizadas y registre una bitácora centralizada de cada operación crítica, para garantizar que solo personal autorizado opere el sistema y que cada acción quede trazada. |
 | Módulo | Seguridad y Auditoría |
 | Requisitos relacionados | RF-13, RF-14, RF-15 |
 
@@ -102,7 +102,7 @@
 2. El sistema valida al usuario autenticado contra una lista blanca explícita de cuentas autorizadas y rechaza el acceso a cualquier cuenta no incluida.
 3. El sistema registra en una bitácora centralizada cada archivo TEF generado y cada impacto de extracto procesado, incluyendo usuario, fecha/hora y resultado.
 4. El sistema registra el estado (Success/Error) y el mensaje técnico devuelto por SAP en cada actualización del maestro de proveedores.
-5. El administrador IT puede consultar el historial de operaciones registradas en la bitácora.
+5. El administrador de infraestructura / analista IT puede consultar el historial de operaciones registradas en la bitácora.
 
 ### Validación INVEST
 

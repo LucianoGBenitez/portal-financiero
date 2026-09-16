@@ -7,7 +7,7 @@
 
 **Actores principales**
 
-- **Operador de Tesorería**: genera las transferencias masivas (CU-01).
+- **Personal Administrativo Contable**: genera las transferencias masivas (CU-01) y sincroniza los datos maestros de CBU (CU-03).
 - **Analista Contable / Conciliador**: concilia extractos e impacta movimientos en el ERP (CU-02).
 - **Analista Contable / Conciliador**: sincroniza los datos maestros de CBU (CU-03).
 
@@ -15,9 +15,7 @@
 
 - **Interbanking API Gateway**: provee los movimientos bancarios y recibe los archivos de transferencia.
 - **SAP Business One Service Layer**: recibe los impactos contables y expone el maestro de proveedores/cuentas.
-- **Padrón bancario externo**: provee los datos que se contrastan con el maestro de SAP.
-- **Servicio de WhatsApp**: transporta las notificaciones de control.
-- **Gerente de Finanzas**: recibe las notificaciones de control.
+- **Gerente de Finanzas**: recibe las notificaciones de control (relación `«extend»` desde CU-02).
 - **Administrador IT**: mantiene la infraestructura, las credenciales y el monitoreo del sistema.
 
 **Relaciones principales**: CU-01, CU-02, CU-03 y CU-04 `«include»` la autenticación y autorización contra la lista blanca corporativa. CU-01, CU-02 y CU-03 `«include»` el registro de la operación en la bitácora. CU-01 `«extend»` la notificación por WhatsApp cuando se genera correctamente el archivo TEF y CU-02 `«extend»` la notificación cuando finaliza correctamente el impacto contable. `«include»` representa un paso obligatorio; `«extend»`, un comportamiento condicional.
@@ -31,15 +29,15 @@
 | Identificador    | CU-01                                                                                                                                                                                                            |
 | Nombre           | Generación de Transferencias Masivas (Archivo TEF)                                                                                                                                                              |
 | Descripción      | El Operador de Tesorería carga una planilla de pagos; el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
-| Actores          | Principal: Operador de Tesorería / Secundarios: Interbanking API Gateway, Administrador IT                                                                                                                      |
-| Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xls, .xlsx o .csv                                                                                              |
+| Actores          | Principal: Operador de Tesorería / Secundario: Administrador IT                                                                                                                                                 |
+| Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xlsx, .csv o .txt                                                                                               |
 | Postcondiciones  | Éxito: archivo TEF generado y disponible para su descarga y envío a Interbanking / Fallo: carga rechazada o filas con error excluidas de la exportación final                                                  |
 
 ### Secuencia normal
 
 | #   | Acción (actor)                                              | Reacción (sistema)                                                                                                                                    |
 | --- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | El Operador de Tesorería carga la planilla de pagos (.xls/.xlsx/.csv) | El sistema detecta automáticamente las columnas de CBU, Importe, Nombre y CUIT mediante búsqueda difusa (fuzzy matching)                              |
+| 1   | El Operador de Tesorería carga la planilla de pagos (.xlsx/.csv/.txt) | El sistema detecta automáticamente las columnas de CBU, Importe, Nombre y CUIT mediante búsqueda difusa (fuzzy matching)                                |
 | 2   | El Operador revisa la previsualización de los datos           | El sistema muestra alertas visuales de errores (ej. CBU sin 22 dígitos) y excluye automáticamente las filas inválidas                                    |
 | 3   | El Operador confirma la generación del archivo                | El sistema compila el archivo de texto de ancho fijo (240 caracteres), estructurando la cabecera (Línea U) y el detalle (Línea M) según Interbanking     |
 | 4   | El Operador descarga el archivo generado                      | El sistema pone a disposición el archivo TEF para su envío a Interbanking                                                                                |
@@ -49,7 +47,7 @@
 | #   | Situación                                                     | Respuesta del sistema                                                                                    |
 | --- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | E1  | Una fila de la planilla contiene un CBU sin 22 dígitos numéricos | El sistema marca la fila con error visual y la excluye de la exportación final, sin detener el proceso general |
-| E2  | El sistema no logra detectar automáticamente alguna columna requerida | El sistema solicita al Operador mapear manualmente la columna correspondiente antes de continuar          |
+| E2  | El sistema no logra detectar automáticamente alguna columna requerida | El sistema solicita al Personal Administrativo Contable mapear manualmente la columna correspondiente antes de continuar |
 
 | Campo       | Detalle                                                                 |
 | ----------- | ------------------------------------------------------------------------ |
@@ -67,9 +65,9 @@
 | Identificador    | CU-02                                                                                                                                                                                            |
 | Nombre           | Conciliación de Extractos e Impacto Contable Directo en ERP                                                                                                                                     |
 | Descripción      | El Analista Contable sincroniza los movimientos bancarios de una cuenta desde Interbanking; el sistema los impacta automáticamente en el libro de bancos de SAP Business One, deja registro en la base de datos y notifica el resultado. |
-| Actores          | Principal: Analista Contable / Conciliador / Secundarios: Interbanking API Gateway, SAP Business One Service Layer, Servicio de WhatsApp, Gerente de Finanzas                              |
+| Actores          | Principal: Analista Contable / Conciliador / Secundario: Interbanking API Gateway, SAP Business One Service Layer, Gerente de Finanzas                                                          |
 | Precondiciones   | Usuario autenticado; cuenta bancaria configurada; CBU asociado correctamente                                                                                                                    |
-| Postcondiciones  | Éxito: movimientos impactados en SAP, registro guardado en MySQL y PDF de control enviado por WhatsApp al Gerente de Finanzas / Fallo: proceso cancelado, sin duplicación de registros y con el error informado al Analista Contable |
+| Postcondiciones  | Éxito: movimientos impactados en SAP, registro guardado en MySQL y PDF de control enviado por WhatsApp a la Jefa de Administración / Fallo: proceso cancelado, sin duplicación de registros y con el error informado al Analista Contable |
 
 ### Secuencia normal
 
@@ -79,7 +77,7 @@
 | 2   | —                                                                    | El sistema verifica la conexión con SAP Business One                                                               |
 | 3   | —                                                                    | El sistema mapea la cuenta bancaria con la cuenta contable correspondiente en SAP                                  |
 | 4   | —                                                                    | El sistema impacta el movimiento en el libro de bancos (asiento contable) de SAP y registra el resultado en MySQL |
-| 5   | —                                                                    | El sistema genera un PDF de control y lo envía automáticamente por WhatsApp al Gerente de Finanzas                 |
+| 5   | —                                                                    | El sistema genera un PDF de control y lo envía automáticamente por WhatsApp a la Jefa de Administración           |
 
 ### Excepciones
 
@@ -101,7 +99,7 @@
 | Identificador    | CU-03                                                                                                                                                                          |
 | Nombre           | Sincronización de Datos Maestros (CBU)                                                                                                                                        |
 | Descripción      | El Analista Contable contrasta un padrón bancario externo contra el maestro de socios de negocio de SAP; el sistema clasifica los resultados y permite actualizar masivamente los datos bancarios en SAP. |
-| Actores          | Principal: Analista Contable / Secundarios: Padrón bancario externo, SAP Business One Service Layer                                                                       |
+| Actores          | Principal: Analista Contable / Secundario: SAP Business One Service Layer                                                                                                     |
 | Precondiciones   | Usuario autenticado; padrón bancario externo disponible; conexión activa con SAP                                                                                              |
 | Postcondiciones  | Éxito: datos bancarios actualizados en el maestro de socios de negocio de SAP / Fallo: cruce cancelado sin modificar el maestro                                              |
 
@@ -109,9 +107,9 @@
 
 | #   | Acción (actor)                                              | Reacción (sistema)                                                                                          |
 | --- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| 1   | El Analista Contable carga o selecciona el padrón bancario externo | El sistema obtiene el maestro de socios de negocio desde SAP y contrasta ambos registros                     |
-| 2   | El Analista revisa las tres categorías generadas               | El sistema clasifica los resultados en actualizaciones inmediatas, sugerencias por nombre y registros únicos |
-| 3   | El Analista confirma la actualización masiva                   | El sistema aplica los cambios en el maestro de SAP y registra el resultado de cada actualización              |
+| 1   | El Personal Administrativo Contable carga o selecciona el padrón bancario externo (Interbanking) | El sistema obtiene el maestro de socios de negocio desde SAP y contrasta ambos registros                     |
+| 2   | El Personal Administrativo Contable revisa las tres categorías generadas               | El sistema clasifica los resultados en actualizaciones inmediatas, sugerencias por nombre y registros únicos |
+| 3   | El Personal Administrativo Contable confirma la actualización masiva                   | El sistema aplica los cambios en el maestro de SAP y registra el resultado de cada actualización              |
 
 ### Excepciones
 
@@ -135,8 +133,8 @@
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificador    | CU-04                                                                                                                                                             |
 | Nombre           | Autenticación y Auditoría del Sistema                                                                                                                            |
-| Descripción      | El sistema valida el acceso de cualquier usuario contra una lista blanca de cuentas autorizadas y registra en una bitácora centralizada cada operación crítica ejecutada, permitiendo su consulta posterior por el Administrador IT. |
-| Actores          | Principal: Todos los usuarios del sistema (transversal) / Secundario: Administrador IT                                                                          |
+| Descripción      | El sistema valida el acceso de cualquier usuario contra una lista blanca de cuentas autorizadas y registra en una bitácora centralizada cada operación crítica ejecutada, permitiendo su consulta posterior por el Administrador de Infraestructura / Analista IT. |
+| Actores          | Principal: Todos los usuarios del sistema (transversal) / Secundario: Administrador de Infraestructura / Analista IT                                                                          |
 | Precondiciones   | El usuario posee credenciales corporativas                                                                                                                       |
 | Postcondiciones  | Éxito: acceso concedido y toda operación crítica registrada en la bitácora / Fallo: acceso denegado y evento registrado                                          |
 
@@ -147,7 +145,7 @@
 | 1   | El usuario intenta acceder al sistema                         | El sistema solicita autenticación                                                                             |
 | 2   | —                                                             | El sistema valida las credenciales contra la lista blanca de cuentas autorizadas                              |
 | 3   | El usuario ejecuta una operación crítica (TEF, extracto, actualización de maestro) | El sistema registra la operación en la bitácora centralizada con usuario, fecha/hora, resultado y mensaje técnico |
-| 4   | El Administrador IT consulta la bitácora                       | El sistema muestra el historial de operaciones registradas                                                    |
+| 4   | El Administrador de Infraestructura / Analista IT consulta la bitácora                       | El sistema muestra el historial de operaciones registradas                                                    |
 
 ### Excepciones
 
