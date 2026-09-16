@@ -2,73 +2,91 @@
 
 ## Diagrama general
 
-_Incluir el código PlantUML en `diagramas/casos-de-uso.puml`._
-_Visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/)._
+*Incluir el código PlantUML en `diagramas/casos-de-uso.puml`.*
+*Visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/).*
 
-_Describir brevemente los actores identificados y las relaciones principales (include, extend)._
+**Actores principales**
 
----
+- **Operador de Tesorería**: genera las transferencias masivas (CU-01).
+- **Analista Contable / Conciliador**: concilia extractos e impacta movimientos en el ERP (CU-02).
 
-## CU-01 — [Nombre]
+**Actores secundarios / externos**
 
-| Campo | Detalle |
-|-------|---------|
-| Identificador | CU-01 |
-| Nombre | |
-| Descripción | |
-| Actores | Principal: / Secundario: |
-| Precondiciones | |
-| Postcondiciones | Éxito: / Fallo: |
+- **Interbanking API Gateway**: provee los movimientos bancarios y recibe los archivos de transferencia.
+- **SAP Business One Service Layer**: recibe los impactos contables y expone el maestro de proveedores/cuentas.
+- **Gerente de Finanzas**: recibe las notificaciones de control (relación `«extend»` desde CU-02).
+- **Administrador IT**: mantiene la infraestructura, las credenciales y el monitoreo del sistema.
 
-### Secuencia normal
-
-| # | Acción (actor) | Reacción (sistema) |
-|---|----------------|--------------------|
-| 1 | | |
-| 2 | | |
-
-### Excepciones
-
-| # | Situación | Respuesta del sistema |
-|---|-----------|-----------------------|
-| E1 | | |
-
-| Campo | Detalle |
-|-------|---------|
-| Rendimiento | |
-| Frecuencia | |
-| Importancia | |
-| Urgencia | |
+**Relaciones principales**: CU-01 y CU-02 `«include»` la autenticación mediante Google OAuth 2.0 y la validación contra la lista blanca corporativa. CU-02 `«extend»` con el envío de la notificación por WhatsApp al Gerente de Finanzas cuando el impacto contable finaliza correctamente.
 
 ---
 
-## CU-02 — [Nombre]
+## CU-01 — Generación de Transferencias Masivas (Archivo TEF)
 
-| Campo | Detalle |
-|-------|---------|
-| Identificador | CU-02 |
-| Nombre | |
-| Descripción | |
-| Actores | Principal: / Secundario: |
-| Precondiciones | |
-| Postcondiciones | Éxito: / Fallo: |
+| Campo            | Detalle                                                                                                                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identificador    | CU-01                                                                                                                                                                                                            |
+| Nombre           | Generación de Transferencias Masivas (Archivo TEF)                                                                                                                                                              |
+| Descripción      | El Operador de Tesorería carga una planilla de pagos; el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
+| Actores          | Principal: Operador de Tesorería / Secundario: Administrador IT                                                                                                                                                 |
+| Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xlsx, .csv o .txt                                                                                               |
+| Postcondiciones  | Éxito: archivo TEF generado y disponible para su descarga y envío a Interbanking / Fallo: carga rechazada o filas con error excluidas de la exportación final                                                  |
 
 ### Secuencia normal
 
-| # | Acción (actor) | Reacción (sistema) |
-|---|----------------|--------------------|
-| 1 | | |
-| 2 | | |
+| #   | Acción (actor)                                              | Reacción (sistema)                                                                                                                                    |
+| --- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | El Operador de Tesorería carga la planilla de pagos (.xlsx/.csv/.txt) | El sistema detecta automáticamente las columnas de CBU, Importe, Nombre y CUIT mediante búsqueda difusa (fuzzy matching)                                |
+| 2   | El Operador revisa la previsualización de los datos           | El sistema muestra alertas visuales de errores (ej. CBU sin 22 dígitos) y excluye automáticamente las filas inválidas                                    |
+| 3   | El Operador confirma la generación del archivo                | El sistema compila el archivo de texto de ancho fijo (240 caracteres), estructurando la cabecera (Línea U) y el detalle (Línea M) según Interbanking     |
+| 4   | El Operador descarga el archivo generado                      | El sistema pone a disposición el archivo TEF para su envío a Interbanking                                                                                |
 
 ### Excepciones
 
-| # | Situación | Respuesta del sistema |
-|---|-----------|-----------------------|
-| E1 | | |
+| #   | Situación                                                     | Respuesta del sistema                                                                                    |
+| --- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| E1  | Una fila de la planilla contiene un CBU sin 22 dígitos numéricos | El sistema marca la fila con error visual y la excluye de la exportación final, sin detener el proceso general |
+| E2  | El sistema no logra detectar automáticamente alguna columna requerida | El sistema solicita al Operador mapear manualmente la columna correspondiente antes de continuar          |
 
-| Campo | Detalle |
-|-------|---------|
-| Rendimiento | |
-| Frecuencia | |
-| Importancia | |
-| Urgencia | |
+| Campo       | Detalle                                                                 |
+| ----------- | ------------------------------------------------------------------------ |
+| Rendimiento | Alto: elimina la transcripción manual del CBU y reduce errores de carga |
+| Frecuencia  | Mensual (carga de planillas de pago)                                     |
+| Importancia | Alta                                                                      |
+| Urgencia    | Media                                                                     |
+
+---
+
+## CU-02 — Conciliación de Extractos e Impacto Contable Directo en ERP
+
+| Campo            | Detalle                                                                                                                                                                                          |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identificador    | CU-02                                                                                                                                                                                            |
+| Nombre           | Conciliación de Extractos e Impacto Contable Directo en ERP                                                                                                                                     |
+| Descripción      | El Analista Contable sincroniza los movimientos bancarios de una cuenta desde Interbanking; el sistema los impacta automáticamente en el libro de bancos de SAP Business One, deja registro en la base de datos y notifica el resultado. |
+| Actores          | Principal: Analista Contable / Conciliador / Secundario: Interbanking API Gateway, SAP Business One Service Layer, Gerente de Finanzas                                                          |
+| Precondiciones   | Usuario autenticado; cuenta bancaria configurada; CBU asociado correctamente                                                                                                                    |
+| Postcondiciones  | Éxito: movimientos impactados en SAP, registro guardado en MySQL y PDF de control enviado por WhatsApp al Gerente de Finanzas / Fallo: proceso cancelado, sin duplicación de registros y con el error informado al Analista Contable |
+
+### Secuencia normal
+
+| #   | Acción (actor)                                                    | Reacción (sistema)                                                                                              |
+| --- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| 1   | El Analista Contable selecciona la sociedad y la cuenta a conciliar | El sistema consulta los movimientos de esa cuenta en Interbanking                                                  |
+| 2   | —                                                                    | El sistema verifica la conexión con SAP Business One                                                               |
+| 3   | —                                                                    | El sistema mapea la cuenta bancaria con la cuenta contable correspondiente en SAP                                  |
+| 4   | —                                                                    | El sistema impacta el movimiento en el libro de bancos (asiento contable) de SAP y registra el resultado en MySQL |
+| 5   | —                                                                    | El sistema genera un PDF de control y lo envía automáticamente por WhatsApp al Gerente de Finanzas                 |
+
+### Excepciones
+
+| #   | Situación                                            | Respuesta del sistema                                                                          |
+| --- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| E1  | SAP Business One no responde durante el impacto contable | El sistema cancela el proceso, evita la duplicación de registros e informa el error al Analista Contable |
+
+| Campo       | Detalle                                                                     |
+| ----------- | ------------------------------------------------------------------------------ |
+| Rendimiento | Alto: elimina la conciliación manual diaria y reduce inconsistencias contables |
+| Frecuencia  | Diaria                                                                          |
+| Importancia | Alta                                                                            |
+| Urgencia    | Alta                                                                            |
