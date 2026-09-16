@@ -53,7 +53,7 @@ El procesamiento de generación de reportes y exportación de PDFs debe ocurrir 
 ### RNF-02
 
 **Notificaciones automáticas vía WhatsApp.**
-Al completarse un impacto contable en SAP o la generación de un archivo TEF, el portal despachará de forma automática alertas en tiempo real al teléfono del Gerente de Finanzas, adjuntando el documento PDF de control.
+Al completarse un impacto contable en SAP o la generación de un archivo TEF, el portal despachará de forma automática alertas en tiempo real al teléfono de la Jefa de Administración, adjuntando el documento PDF de control.
 
 ### RNF-03
 
