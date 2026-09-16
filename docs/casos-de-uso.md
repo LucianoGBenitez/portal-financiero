@@ -90,3 +90,72 @@
 | Frecuencia  | Diaria                                                                          |
 | Importancia | Alta                                                                            |
 | Urgencia    | Alta                                                                            |
+
+## CU-03 — Sincronización de Datos Maestros (CBU)
+
+| Campo            | Detalle                                                                                                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identificador    | CU-03                                                                                                                                                                          |
+| Nombre           | Sincronización de Datos Maestros (CBU)                                                                                                                                        |
+| Descripción      | El Analista Contable contrasta un padrón bancario externo contra el maestro de socios de negocio de SAP; el sistema clasifica los resultados y permite actualizar masivamente los datos bancarios en SAP. |
+| Actores          | Principal: Analista Contable / Secundario: SAP Business One Service Layer                                                                                                     |
+| Precondiciones   | Usuario autenticado; padrón bancario externo disponible; conexión activa con SAP                                                                                              |
+| Postcondiciones  | Éxito: datos bancarios actualizados en el maestro de socios de negocio de SAP / Fallo: cruce cancelado sin modificar el maestro                                              |
+
+### Secuencia normal
+
+| #   | Acción (actor)                                              | Reacción (sistema)                                                                                          |
+| --- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| 1   | El Analista Contable carga o selecciona el padrón bancario externo | El sistema obtiene el maestro de socios de negocio desde SAP y contrasta ambos registros                     |
+| 2   | El Analista revisa las tres categorías generadas               | El sistema clasifica los resultados en actualizaciones inmediatas, sugerencias por nombre y registros únicos |
+| 3   | El Analista confirma la actualización masiva                   | El sistema aplica los cambios en el maestro de SAP y registra el resultado de cada actualización              |
+
+### Excepciones
+
+| #   | Situación                                                | Respuesta del sistema                                                              |
+| --- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| E1  | SAP no responde durante la actualización masiva              | El sistema cancela la operación, no aplica cambios parciales e informa el error         |
+| E2  | El padrón bancario contiene registros con CBU inválido        | El sistema excluye esos registros de la comparación y los reporta por separado          |
+
+| Campo       | Detalle                                                                 |
+| ----------- | ------------------------------------------------------------------------ |
+| Rendimiento | Alto: elimina la actualización manual de CBU uno por uno en SAP        |
+| Frecuencia  | Mensual o quincenal (según ciclo de actualización del padrón bancario) |
+| Importancia | Alta                                                                      |
+| Urgencia    | Media                                                                     |
+
+---
+
+## CU-04 — Autenticación y Auditoría del Sistema
+
+| Campo            | Detalle                                                                                                                                                           |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identificador    | CU-04                                                                                                                                                             |
+| Nombre           | Autenticación y Auditoría del Sistema                                                                                                                            |
+| Descripción      | El sistema valida el acceso de cualquier usuario contra una lista blanca de cuentas autorizadas y registra en una bitácora centralizada cada operación crítica ejecutada, permitiendo su consulta posterior por el Administrador IT. |
+| Actores          | Principal: Todos los usuarios del sistema (transversal) / Secundario: Administrador IT                                                                          |
+| Precondiciones   | El usuario posee credenciales corporativas                                                                                                                       |
+| Postcondiciones  | Éxito: acceso concedido y toda operación crítica registrada en la bitácora / Fallo: acceso denegado y evento registrado                                          |
+
+### Secuencia normal
+
+| #   | Acción (actor)                                              | Reacción (sistema)                                                                                          |
+| --- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| 1   | El usuario intenta acceder al sistema                         | El sistema solicita autenticación                                                                             |
+| 2   | —                                                             | El sistema valida las credenciales contra la lista blanca de cuentas autorizadas                              |
+| 3   | El usuario ejecuta una operación crítica (TEF, extracto, actualización de maestro) | El sistema registra la operación en la bitácora centralizada con usuario, fecha/hora, resultado y mensaje técnico |
+| 4   | El Administrador IT consulta la bitácora                       | El sistema muestra el historial de operaciones registradas                                                    |
+
+### Excepciones
+
+| #   | Situación                                     | Respuesta del sistema                                                     |
+| --- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| E1  | El usuario no figura en la lista blanca            | El sistema deniega el acceso y registra el intento en la bitácora              |
+| E2  | El ERP devuelve un error técnico durante una operación | El sistema registra el estado Error junto con el mensaje técnico devuelto |
+
+| Campo       | Detalle                                                                     |
+| ----------- | ------------------------------------------------------------------------------ |
+| Rendimiento | Alto: evita accesos no autorizados y pérdida de trazabilidad                  |
+| Frecuencia  | Continua (se ejecuta en cada acceso y en cada operación crítica del sistema) |
+| Importancia | Alta                                                                            |
+| Urgencia    | Alta                                                                            |
