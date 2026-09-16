@@ -1,26 +1,62 @@
 @startuml
-title Diagrama de Casos de Uso - [Nombre del Sistema]
+title Diagrama general de casos de uso - Portal Financiero
 
 left to right direction
+skinparam packageStyle rectangle
 
 ' --- Actores ---
-actor "[Actor principal]" as A1
-actor "[Actor secundario]" as A2
+actor "Personal Administrativo\nContable" as Administrativo
+actor "Analista\nContable" as Analista
+actor "Administrador\nIT" as AdminIT
+actor "Interbanking\nAPI Gateway" as Interbanking
+actor "SAP Business One\nService Layer" as SAP
+actor "Padrón bancario\nexterno" as Padron
+actor "Servicio de\nWhatsApp" as WhatsApp
+actor "Gerente de\nFinanzas" as Gerente
 
 ' --- Sistema ---
-rectangle "[Nombre del Sistema]" {
-  usecase "[Caso de uso 1]" as UC1
-  usecase "[Caso de uso 2]" as UC2
-  usecase "[Caso de uso 3]" as UC3
+rectangle "Portal Financiero" {
+  usecase "CU-01\nGenerar archivo TEF" as CU01
+  usecase "CU-02\nSincronizar extractos\ne impactar SAP" as CU02
+  usecase "CU-03\nSincronizar datos\nmaestros (CBU)" as CU03
+  usecase "CU-04\nGestionar autenticación\ny auditoría" as CU04
+
+  usecase "Autenticar y autorizar\nusuario" as Auth
+  usecase "Registrar operación\nen bitácora" as Audit
+  usecase "Notificar resultado\nde la operación" as Notify
 }
 
 ' --- Relaciones actor-caso de uso ---
-A1 --> UC1
-A1 --> UC2
-A2 --> UC3
+Administrativo --> CU01
+Analista --> CU02
+Analista --> CU03
+AdminIT --> CU04
+AdminIT --> Audit
+Interbanking --> CU01
+Interbanking --> CU02
+SAP --> CU02
+SAP --> CU03
+Padron --> CU03
+WhatsApp --> Notify
+Gerente --> Notify
 
-' --- Relaciones entre casos de uso ---
-' UC2 .> UC1 : <<include>>
-' UC3 .> UC1 : <<extend>>
+' --- Relaciones obligatorias ---
+CU01 .> Auth : <<include>>
+CU02 .> Auth : <<include>>
+CU03 .> Auth : <<include>>
+CU04 .> Auth : <<include>>
+CU01 .> Audit : <<include>>
+CU02 .> Audit : <<include>>
+CU03 .> Audit : <<include>>
+  CU04 .> Audit : <<include>>
+
+' --- Extensiones condicionales ---
+CU01 .> Notify : <<extend>>\n[archivo generado]
+CU02 .> Notify : <<extend>>\n[impacto SAP exitoso]
+
+note "<<include>>: la autenticación y la auditoría\nson pasos obligatorios del flujo." as NInclude
+note "<<extend>>: la notificación se dispara\nsolo cuando la operación finaliza correctamente." as NExtend
+NInclude .. Auth
+NExtend .. Notify
 
 @enduml

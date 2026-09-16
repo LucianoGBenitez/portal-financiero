@@ -50,7 +50,7 @@
 |Personal Administrativo Contable | Interno | Alto |
 |Analista Contable | Interno | Alto |
 |Jefatura de Administración | Interno | Bajo |
-|Administrador de Infraestructura / Analista IT | `Interno | Medio |
+|Administrador de Infraestructura / Analista IT | Interno | Medio |
 |Interbanking API Gateway |Sistema Externo | Alto |
 |SAP Business One Service Layer | Sistema Externo | Alto |
 
