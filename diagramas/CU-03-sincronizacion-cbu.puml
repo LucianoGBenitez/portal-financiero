@@ -1,0 +1,38 @@
+@startuml
+title CU-03 - Sincronizacion de Datos Maestros (CBU)
+
+start
+
+:Personal Administrativo Contable inicia la operacion;
+:Sistema autentica y autoriza al usuario;
+
+if (¿Usuario autorizado?) then (Si)
+	:Registrar inicio en la bitacora;
+	:Cargar o seleccionar el padron bancario de Interbanking;
+	:Obtener maestro de socios de negocio desde SAP;
+	:Contrastar padron y maestro de SAP;
+	:Excluir registros con CBU invalido;
+	:Clasificar resultados en tres categorias;
+	:Mostrar actualizaciones inmediatas;
+	:Mostrar sugerencias por nombre;
+	:Mostrar registros unicos;
+	:Usuario revisa las categorias y los registros excluidos;
+	:Usuario confirma la actualizacion masiva;
+
+	if (¿SAP responde durante la actualizacion?) then (Si)
+		:Aplicar cambios en el maestro de SAP;
+		:Registrar resultado de cada actualizacion;
+		:Registrar finalizacion exitosa en la bitacora;
+	else (No)
+		:Cancelar la operacion;
+		:No aplicar cambios parciales;
+		:Informar el error al usuario;
+		:Registrar el fallo en la bitacora;
+	endif
+else (No)
+	:Denegar el acceso;
+	:Registrar intento no autorizado en la bitacora;
+endif
+
+stop
+@enduml

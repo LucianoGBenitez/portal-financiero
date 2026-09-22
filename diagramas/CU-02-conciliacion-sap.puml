@@ -1,0 +1,34 @@
+@startuml
+title CU-02 - Conciliacion de Extractos e Impacto Contable en ERP
+
+start
+
+:Analista Contable inicia la operacion;
+:Sistema autentica y autoriza al usuario;
+
+if (¿Usuario autorizado?) then (Si)
+	:Registrar inicio en la bitacora;
+	:Analista selecciona sociedad y cuenta;
+	:Consultar movimientos en Interbanking API Gateway;
+	:Verificar conexion con SAP Business One;
+
+	if (¿SAP responde?) then (Si)
+		:Mapear cuenta bancaria con cuenta contable de SAP;
+		:Impactar movimientos en el libro de bancos de SAP;
+		:Registrar resultado del impacto en MySQL;
+		:Generar PDF de control;
+		:Enviar PDF por WhatsApp a la Jefa de Administracion;
+		:Registrar finalizacion exitosa en la bitacora;
+	else (No)
+		:Cancelar el proceso;
+		:Evitar duplicacion de registros;
+		:Informar el error al Analista Contable;
+		:Registrar el fallo en la bitacora;
+	endif
+else (No)
+	:Denegar el acceso;
+	:Registrar intento no autorizado en la bitacora;
+endif
+
+stop
+@enduml
