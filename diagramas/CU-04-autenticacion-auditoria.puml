@@ -1,0 +1,31 @@
+@startuml
+title CU-04 - Autenticacion y Auditoria del Sistema
+
+start
+
+:Usuario intenta acceder al sistema;
+:Solicitar credenciales corporativas;
+:Validar credenciales contra la lista blanca;
+
+if (¿Usuario autorizado?) then (Si)
+	:Conceder acceso al sistema;
+	:Usuario ejecuta una operacion critica;
+	:Capturar usuario, fecha, hora, resultado y mensaje tecnico;
+	:Registrar la operacion en la bitacora centralizada;
+
+	if (¿La operacion finaliza con error?) then (Si)
+		:Registrar estado Error y mensaje tecnico;
+		:Informar el error al usuario;
+	else (No)
+		:Registrar estado Exitoso;
+	endif
+
+	:Administrador de Infraestructura o Analista IT consulta la bitacora;
+	:Mostrar historial de operaciones registradas;
+else (No)
+	:Denegar el acceso;
+	:Registrar intento no autorizado en la bitacora;
+endif
+
+stop
+@enduml
