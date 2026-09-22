@@ -1,0 +1,45 @@
+@startuml
+title CU-01 - Generacion de Transferencias Masivas (Archivo TEF)
+
+start
+
+:Personal Administrativo Contable inicia la operacion;
+:Sistema autentica y autoriza al usuario;
+
+if (¿Usuario autorizado?) then (Si)
+	:Registrar inicio en la bitacora;
+	:Usuario carga planilla .xls, .xlsx o .csv;
+	:Detectar columnas de CBU, importe, nombre y CUIT;
+
+	if (¿Se detectaron todas las columnas?) then (Si)
+		:Mostrar previsualizacion de la planilla;
+	else (No)
+		:Solicitar mapeo manual de las columnas requeridas;
+		:Usuario completa el mapeo;
+		:Mostrar previsualizacion de la planilla;
+	endif
+
+	:Validar los datos bancarios de cada fila;
+	:Marcar visualmente las filas invalidas;
+	:Excluir filas con CBU no numerico o distinto de 22 digitos;
+	:Usuario revisa la previsualizacion;
+	:Usuario confirma la generacion del archivo;
+	:Compilar cabecera U y detalles M;
+	:Generar archivo TEF de ancho fijo de 240 caracteres;
+	:Registrar resultado en la bitacora;
+	:Poner el archivo TEF a disposicion para descarga;
+
+	if (¿Archivo generado correctamente?) then (Si)
+		:Notificar resultado por WhatsApp;
+		:Usuario descarga el archivo TEF;
+		:Enviar archivo a Interbanking API Gateway;
+	else (No)
+		:Informar el error al usuario;
+	endif
+else (No)
+	:Denegar el acceso;
+	:Registrar intento no autorizado en la bitacora;
+endif
+
+stop
+@enduml
