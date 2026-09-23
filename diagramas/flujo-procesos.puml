@@ -1,0 +1,139 @@
+' Diagramas de flujo (TO-BE) del Portal Financiero, uno por proceso de negocio.
+' Se separan por proceso porque cada uno tiene una frecuencia distinta (mensual/diaria/quincenal)
+' y unirlos en un solo flujo lineal los volvería ilegibles.
+' Visualizar en https://www.plantuml.com/plantuml/uml/
+
+@startuml Flujo-CU01-TEF
+title Flujo TO-BE — CU-01 Generación de Transferencias Masivas (TEF)\nFrecuencia: mensual
+
+|Personal Administrativo Contable|
+start
+:Autenticarse en el sistema;
+
+|Sistema (Portal Financiero)|
+:Validar usuario contra lista blanca;
+if (¿Usuario autorizado?) then (no)
+  :Denegar acceso y registrar\nintento en bitácora;
+  stop
+endif
+
+|Personal Administrativo Contable|
+:Cargar planilla de pagos\n(.xlsx / .csv / .txt);
+
+|Sistema (Portal Financiero)|
+:Detectar columnas (CBU, Importe,\nNombre, CUIT) por fuzzy matching;
+if (¿Detectó todas las columnas requeridas?) then (no)
+  |Personal Administrativo Contable|
+  :Mapear manualmente\nla columna faltante;
+  |Sistema (Portal Financiero)|
+endif
+:Validar formato de CBU y CUIT\nde cada fila;
+:Marcar visualmente las filas inválidas\ny excluirlas de la exportación;
+
+|Personal Administrativo Contable|
+:Revisar la previsualización\n(filas válidas / excluidas);
+if (¿Confirma la generación del archivo?) then (sí)
+  |Sistema (Portal Financiero)|
+  :Compilar archivo TEF de ancho fijo\n(240 caracteres, cabecera + detalle);
+  :Registrar la operación en la bitácora;
+  :Poner el archivo a disposición\npara su descarga;
+  |Personal Administrativo Contable|
+  :Descargar el archivo\ny enviarlo a Interbanking;
+else (no)
+  |Sistema (Portal Financiero)|
+  :Cancelar la operación;
+endif
+stop
+
+@enduml
+
+@startuml Flujo-CU02-Extractos
+title Flujo TO-BE — CU-02 Conciliación de Extractos e Impacto Contable\nFrecuencia: diaria
+
+|Analista Contable|
+start
+:Autenticarse en el sistema;
+
+|Sistema (Portal Financiero)|
+:Validar usuario contra lista blanca;
+if (¿Usuario autorizado?) then (no)
+  :Denegar acceso y registrar\nintento en bitácora;
+  stop
+endif
+
+|Analista Contable|
+:Seleccionar sociedad\ny cuenta a conciliar;
+
+|Sistema (Portal Financiero)|
+:Consultar movimientos de la cuenta\nen Interbanking;
+
+|Interbanking|
+:Devolver los movimientos\nbancarios del día;
+
+|Sistema (Portal Financiero)|
+:Verificar la conexión\ncon SAP Business One;
+if (¿SAP responde?) then (no)
+  :Cancelar el proceso\nsin duplicar registros;
+  :Informar el error\nal Analista Contable;
+  stop
+endif
+:Mapear la cuenta bancaria con la\ncuenta contable de SAP;
+:Impactar el movimiento en el libro\nde bancos (débito / crédito);
+
+|SAP Business One|
+:Confirmar el asiento contable;
+
+|Sistema (Portal Financiero)|
+:Registrar el resultado\nen la base de datos (MySQL);
+:Generar el PDF de control;
+
+|Servicio de WhatsApp|
+:Enviar el PDF a la\nJefa de Administración;
+
+stop
+
+@enduml
+
+@startuml Flujo-CU03-CBU
+title Flujo TO-BE — CU-03 Sincronización de Datos Maestros (CBU)\nFrecuencia: mensual o quincenal
+
+|Personal Administrativo Contable|
+start
+:Autenticarse en el sistema;
+
+|Sistema (Portal Financiero)|
+:Validar usuario contra lista blanca;
+if (¿Usuario autorizado?) then (no)
+  :Denegar acceso y registrar\nintento en bitácora;
+  stop
+endif
+
+|Personal Administrativo Contable|
+:Cargar o seleccionar el\npadrón bancario externo;
+
+|Sistema (Portal Financiero)|
+:Obtener el maestro de socios\nde negocio desde SAP;
+:Contrastar ambos registros;
+:Excluir los registros con CBU\ninválido y reportarlos aparte;
+:Clasificar los resultados en 3 categorías\n(actualización inmediata / sugerencia\npor nombre / registro único);
+
+|Personal Administrativo Contable|
+:Revisar las categorías generadas;
+if (¿Confirma la actualización masiva?) then (sí)
+  |Sistema (Portal Financiero)|
+  :Aplicar los cambios en el\nmaestro de SAP;
+  |SAP Business One|
+  if (¿SAP responde correctamente\na cada actualización?) then (sí)
+    |Sistema (Portal Financiero)|
+    :Registrar el estado Success\npor cada actualización aplicada;
+  else (no)
+    :Cancelar sin aplicar\ncambios parciales;
+    :Registrar el estado Error\ncon el mensaje técnico de SAP;
+  endif
+else (no)
+  |Sistema (Portal Financiero)|
+  :Cancelar la operación\nsin modificar el maestro;
+endif
+stop
+
+@enduml
