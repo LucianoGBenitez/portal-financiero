@@ -9,24 +9,15 @@
 
 - **Personal Administrativo Contable**: genera las transferencias masivas (CU-01) y sincroniza los datos maestros de CBU (CU-03).
 - **Analista Contable / Conciliador**: concilia extractos e impacta movimientos en el ERP (CU-02).
-<<<<<<< HEAD
-- **Analista Contable / Conciliador**: sincroniza los datos maestros de CBU (CU-03).
-=======
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 
 **Actores secundarios / externos**
 
 - **Interbanking API Gateway**: provee los movimientos bancarios y recibe los archivos de transferencia.
 - **SAP Business One Service Layer**: recibe los impactos contables y expone el maestro de proveedores/cuentas.
-<<<<<<< HEAD
-- **Gerente de Finanzas**: recibe las notificaciones de control (relación `«extend»` desde CU-02).
-- **Administrador IT**: mantiene la infraestructura, las credenciales y el monitoreo del sistema.
-=======
 - **Padrón bancario externo (Interbanking)**: provee los datos que se contrastan con el maestro de SAP.
 - **Servicio de WhatsApp**: transporta las notificaciones de control.
 - **Jefa de Administración**: recibe las notificaciones de control.
 - **Administrador de Infraestructura / Analista IT**: mantiene la infraestructura, las credenciales y el monitoreo del sistema.
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 
 **Relaciones principales**: CU-01, CU-02, CU-03 y CU-04 `«include»` la autenticación y autorización contra la lista blanca corporativa. CU-01, CU-02 y CU-03 `«include»` el registro de la operación en la bitácora. CU-01 `«extend»` la notificación por WhatsApp cuando se genera correctamente el archivo TEF y CU-02 `«extend»` la notificación cuando finaliza correctamente el impacto contable. `«include»` representa un paso obligatorio; `«extend»`, un comportamiento condicional.
 
@@ -38,32 +29,19 @@
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificador    | CU-01                                                                                                                                                                                                            |
 | Nombre           | Generación de Transferencias Masivas (Archivo TEF)                                                                                                                                                              |
-<<<<<<< HEAD
-| Descripción      | El Operador de Tesorería carga una planilla de pagos; el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
-| Actores          | Principal: Operador de Tesorería / Secundario: Administrador IT                                                                                                                                                 |
-| Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xlsx, .csv o .txt                                                                                               |
-=======
 | Descripción      | El Personal Administrativo Contable carga una planilla de pagos; el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
 | Actores          | Principal: Personal Administrativo Contable / Secundarios: Interbanking API Gateway, Administrador de Infraestructura / Analista IT                                                                                                                      |
 | Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xls, .xlsx o .csv                                                                                              |
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 | Postcondiciones  | Éxito: archivo TEF generado y disponible para su descarga y envío a Interbanking / Fallo: carga rechazada o filas con error excluidas de la exportación final                                                  |
 
 ### Secuencia normal
 
 | #   | Acción (actor)                                              | Reacción (sistema)                                                                                                                                    |
 | --- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-<<<<<<< HEAD
-| 1   | El Operador de Tesorería carga la planilla de pagos (.xlsx/.csv/.txt) | El sistema detecta automáticamente las columnas de CBU, Importe, Nombre y CUIT mediante búsqueda difusa (fuzzy matching)                                |
-| 2   | El Operador revisa la previsualización de los datos           | El sistema muestra alertas visuales de errores (ej. CBU sin 22 dígitos) y excluye automáticamente las filas inválidas                                    |
-| 3   | El Operador confirma la generación del archivo                | El sistema compila el archivo de texto de ancho fijo (240 caracteres), estructurando la cabecera (Línea U) y el detalle (Línea M) según Interbanking     |
-| 4   | El Operador descarga el archivo generado                      | El sistema pone a disposición el archivo TEF para su envío a Interbanking                                                                                |
-=======
 | 1   | El Personal Administrativo Contable carga la planilla de pagos (.xls/.xlsx/.csv) | El sistema detecta automáticamente las columnas de CBU, Importe, Nombre y CUIT mediante búsqueda difusa (fuzzy matching)                              |
 | 2   | El Personal Administrativo Contable revisa la previsualización de los datos | El sistema muestra alertas visuales de errores (ej. CBU sin 22 dígitos) y excluye automáticamente las filas inválidas                                    |
 | 3   | El Personal Administrativo Contable confirma la generación del archivo      | El sistema compila el archivo de texto de ancho fijo (240 caracteres), estructurando la cabecera (Línea U) y el detalle (Línea M) según Interbanking     |
 | 4   | El Personal Administrativo Contable descarga el archivo generado            | El sistema pone a disposición el archivo TEF para su envío a Interbanking                                                                                |
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 
 ### Excepciones
 
@@ -88,11 +66,7 @@
 | Identificador    | CU-02                                                                                                                                                                                            |
 | Nombre           | Conciliación de Extractos e Impacto Contable Directo en ERP                                                                                                                                     |
 | Descripción      | El Analista Contable sincroniza los movimientos bancarios de una cuenta desde Interbanking; el sistema los impacta automáticamente en el libro de bancos de SAP Business One, deja registro en la base de datos y notifica el resultado. |
-<<<<<<< HEAD
-| Actores          | Principal: Analista Contable / Conciliador / Secundario: Interbanking API Gateway, SAP Business One Service Layer, Gerente de Finanzas                                                          |
-=======
 | Actores          | Principal: Analista Contable / Conciliador / Secundarios: Interbanking API Gateway, SAP Business One Service Layer, Servicio de WhatsApp, Jefa de Administración                              |
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 | Precondiciones   | Usuario autenticado; cuenta bancaria configurada; CBU asociado correctamente                                                                                                                    |
 | Postcondiciones  | Éxito: movimientos impactados en SAP, registro guardado en MySQL y PDF de control enviado por WhatsApp a la Jefa de Administración / Fallo: proceso cancelado, sin duplicación de registros y con el error informado al Analista Contable |
 
@@ -125,15 +99,9 @@
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificador    | CU-03                                                                                                                                                                          |
 | Nombre           | Sincronización de Datos Maestros (CBU)                                                                                                                                        |
-<<<<<<< HEAD
-| Descripción      | El Analista Contable contrasta un padrón bancario externo contra el maestro de socios de negocio de SAP; el sistema clasifica los resultados y permite actualizar masivamente los datos bancarios en SAP. |
-| Actores          | Principal: Analista Contable / Secundario: SAP Business One Service Layer                                                                                                     |
-| Precondiciones   | Usuario autenticado; padrón bancario externo disponible; conexión activa con SAP                                                                                              |
-=======
 | Descripción      | El Personal Administrativo Contable contrasta un padrón bancario externo (Interbanking) contra el maestro de socios de negocio de SAP; el sistema clasifica los resultados y permite actualizar masivamente los datos bancarios en SAP. |
 | Actores          | Principal: Personal Administrativo Contable / Secundarios: Padrón bancario externo (Interbanking), SAP Business One Service Layer                                                                       |
 | Precondiciones   | Usuario autenticado; padrón bancario externo (Interbanking) disponible; conexión activa con SAP                                                                                              |
->>>>>>> 46356ce54ab7bc9b437b6f6492cae12f5f2f2ae9
 | Postcondiciones  | Éxito: datos bancarios actualizados en el maestro de socios de negocio de SAP / Fallo: cruce cancelado sin modificar el maestro                                              |
 
 ### Secuencia normal
