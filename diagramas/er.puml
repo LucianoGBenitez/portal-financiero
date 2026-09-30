@@ -1,31 +1,124 @@
-@startuml
-title Modelo Entidad-Relación - [Nombre del Sistema]
+@startuml ER
+title Modelo Entidad-Relación - Portal Financiero
 
 ' --- Entidades ---
-entity Entidad1 {
-  * id_entidad1 : integer <<PK>>
+entity Usuario {
+  * id_usuario : integer <<PK>>
   --
-  atributo1 : varchar
-  atributo2 : varchar
+  nombre : varchar(150)
+  email : varchar(150)
+  rol : varchar(50)
+  autorizado : boolean
+  fecha_alta : datetime
 }
 
-entity Entidad2 {
-  * id_entidad2 : integer <<PK>>
+entity CuentaBancaria {
+  * id_cuenta : integer <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  cbu : varchar(22)
+  banco : varchar(100)
+  empresa : varchar(100)
+  cuenta_contable_sap : varchar(50)
 }
 
-entity Entidad3 {
-  * id_entidad3 : integer <<PK>>
+entity LotePago {
+  * id_lote : integer <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  id_usuario_carga : integer <<FK>>
+  nombre_archivo_original : varchar(255)
+  fecha_carga : datetime
+  estado_general : varchar(20)
+}
+
+entity DetallePago {
+  * id_detalle : integer <<PK>>
+  --
+  id_lote : integer <<FK>>
+  cbu : varchar(22)
+  cuit : varchar(11)
+  nombre_beneficiario : varchar(150)
+  importe : decimal(15,2)
+  estado_validacion : varchar(20)
+  motivo_error : varchar(255)
+}
+
+entity ArchivoTEF {
+  * id_archivo_tef : integer <<PK>>
+  --
+  id_lote : integer <<FK>>
+  fecha_generacion : datetime
+  cantidad_registros : integer
+  ruta_archivo : varchar(255)
+}
+
+entity SincronizacionExtracto {
+  * id_sincronizacion : integer <<PK>>
+  --
+  id_cuenta : integer <<FK>>
+  id_usuario : integer <<FK>>
+  fecha_ejecucion : datetime
+  estado : varchar(20)
+  cantidad_movimientos_procesados : integer
+}
+
+entity MovimientoBancario {
+  * id_movimiento : integer <<PK>>
+  --
+  id_sincronizacion : integer <<FK>>
+  fecha_movimiento : date
+  importe : decimal(15,2)
+  tipo : varchar(10)
+  estado : varchar(20)
+  fecha_impacto_sap : datetime
+}
+
+entity SocioNegocio {
+  * id_socio : integer <<PK>>
+  --
+  cuit : varchar(11)
+  cbu_actual : varchar(22)
+  nombre : varchar(150)
+  origen : varchar(50)
+  fecha_ultima_sincronizacion : datetime
+}
+
+entity ActualizacionMaestroCBU {
+  * id_actualizacion : integer <<PK>>
+  --
+  id_socio : integer <<FK>>
+  id_usuario : integer <<FK>>
+  categoria : varchar(30)
+  estado : varchar(10)
+  mensaje_tecnico : text
+  fecha : datetime
+}
+
+entity BitacoraAuditoria {
+  * id_bitacora : integer <<PK>>
+  --
+  id_usuario : integer <<FK>>
+  id_archivo_tef : integer <<FK>>
+  id_sincronizacion : integer <<FK>>
+  tipo_operacion : varchar(10)
+  resultado : varchar(20)
+  detalle : text
+  notificado : boolean
+  fecha_notificacion : datetime
+  fecha : datetime
 }
 
 ' --- Relaciones ---
 ' Sintaxis: EntidadA [cardinalidad] -- [cardinalidad] EntidadB : "etiqueta"
-Entidad1 ||--o{ Entidad2 : "relación"
-Entidad1 ||--o{ Entidad3 : "relación"
+Usuario ||--o{ LotePago : "carga"
+Usuario ||--o{ SincronizacionExtracto : "ejecuta"
+Usuario ||--o{ ActualizacionMaestroCBU : "ejecuta"
+Usuario ||--o{ BitacoraAuditoria : "genera"
+LotePago ||--o{ DetallePago : "contiene"
+LotePago ||--o| ArchivoTEF : "genera"
+CuentaBancaria ||--o{ SincronizacionExtracto : "pertenece a"
+SincronizacionExtracto ||--o{ MovimientoBancario : "descarga"
+SocioNegocio ||--o{ ActualizacionMaestroCBU : "recibe"
+ArchivoTEF ||--o| BitacoraAuditoria : "registra"
+SincronizacionExtracto ||--o| BitacoraAuditoria : "registra"
 
 @enduml
