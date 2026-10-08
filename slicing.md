@@ -38,18 +38,27 @@ vez ni terminar en una iteración: es una épica.
 - **¿Quién sube el archivo a Interbanking?** El CU-01 dice que el usuario lo descarga, pero
   la "Interbanking API Gateway" figura como actor secundario. ¿Lo envía el sistema o lo sube
   una persona?
+
   **Respuesta:** Se modificó el CU-01, el usuario descarga el archivo y lo sube al sitio de Interbanking.
+
 - **¿Alcanza con que el CBU tenga formato válido?** Un CBU puede tener 22 dígitos y no ser
   del proveedor. ¿Se cruza con el maestro de SAP (Módulo 3)?
+
   **Respuesta:** El CBU no se carga aleatoriamente, los pagos se extraen directamente desde el ERP con el CBU y el resto de los datos necesarios según cada Proveedor / Socio de Negocio.
+
 - **¿Qué pasa con las filas excluidas?** ¿Se pierden o quedan pendientes para el lote
   siguiente? ¿Quién se entera de que ese proveedor no cobró?
+
   **Respuesta:** Las filas se pierden en el lote siguiente, no se guarda información de los proveedores excluidos. Para evitar la exclusión de los proveedores se debe validar correctamente desde SAP para que
   a futuro la información sea correcta.
+
 - **¿Genera y aprueba la misma persona?** En tesorería es común que una persona arme el lote y otra lo
   autorice.
+
   **Respuesta:** La misma persona que genera el lote es la que lo aprueba. De todas maneras la transferencia final se realiza desde Interbanking y esta sí debe ser aprobada por jefatura de administración desde su cuenta.
+
 - **¿Hay un tope?** Por transferencia, por lote o por día.
+
   **Respuesta:** No hay topes por transferencia, por lote o por día. Los límites están dados por las restricciones de cada entidad bancaria.
 
 ---
