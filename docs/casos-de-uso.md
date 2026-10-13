@@ -29,10 +29,10 @@
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificador    | CU-01                                                                                                                                                                                                            |
 | Nombre           | Generación de Transferencias Masivas (Archivo TEF)                                                                                                                                                              |
-| Descripción      | El Personal Administrativo Contable carga una planilla de pagos; el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
-| Actores          | Principal: Personal Administrativo Contable / Secundarios: Interbanking API Gateway, Administrador de Infraestructura / Analista IT                                                                                                                      |
+| Descripción      | El Personal Administrativo Contable carga una planilla de pagos en formato .xlsx (archivo Excel); el sistema detecta y valida automáticamente los datos bancarios (CBU, Importe, Nombre, CUIT) y genera el archivo TEF (en formato .txt requerido por Interbanking) de ancho fijo (240 caracteres) para ejecutar las transferencias mediante Interbanking. |
+| Actores          | Principal: Personal Administrativo Contable                                                                                                                      |
 | Precondiciones   | Usuario autenticado con cuenta corporativa autorizada; planilla de pagos disponible en formato .xls, .xlsx o .csv                                                                                              |
-| Postcondiciones  | Éxito: archivo TEF generado y disponible para su descarga y envío a Interbanking / Fallo: carga rechazada o filas con error excluidas de la exportación final                                                  |
+| Postcondiciones  | Éxito: archivo TEF generado y disponible para su descarga y subida a Interbanking / Fallo: carga rechazada o filas con error excluidas de la exportación final                                                  |
 
 ### Secuencia normal
 
