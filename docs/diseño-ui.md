@@ -47,18 +47,46 @@ sin depender del mouse.
 
 ---
 
-## Pantalla / Módulo 2 — [Nombre]
+## Pantalla / Módulo 2 — Previsualización y confirmación de movimientos bancarios (CU-02, paso 2 de 3)
 
-**Wireframe:** `diagramas/wireframes/[archivo]`
+**Wireframe:** [`diagramas/wireframes/cu02-previsualizacion-movimientos.txt`](../diagramas/wireframes/cu02-previsualizacion-movimientos.txt)
 
-**Patrones de diseño utilizados:**
+**Patrones de diseño utilizados:** Tabla con selección múltiple (checkboxes), tarjetas de
+resumen (KPI cards), banner de estado (éxito / error) en lugar de modal bloqueante.
 
-**Justificación:**
+**Justificación:** El usuario de esta pantalla es el Analista Contable. A diferencia de la
+previsualización de CU-01 (donde solo se excluyen filas inválidas), acá el usuario elige
+activamente cuáles movimientos confirmar (slicing, Historia 2.2), por eso la tabla necesita
+selección múltiple y no solo badges de validación. El banner de resultado reemplaza a un
+modal porque el analista necesita poder seguir viendo cuánto se procesó después de confirmar
+(HU-02 criterio 7), algo que un modal bloqueante taparía. Los movimientos marcados como
+"posible duplicado" se muestran desmarcados por defecto: es una decisión de seguridad, el
+sistema nunca auto-confirma algo que sospecha que ya fue impactado antes.
 
 **Formulario (si aplica):**
-- Cantidad de campos:
-- Flujo (todo en una pantalla / por pasos):
-- Validaciones relevantes:
+- Cantidad de campos: no es un formulario de carga; tiene 1 filtro ("solo posibles
+  duplicados"), 2 acciones de selección masiva (`Seleccionar todos`/`Ninguno`), 1 checkbox
+  por fila y 2 acciones finales (`Volver`, `Confirmar envío a SAP`).
+- Flujo: paso 2 de 3 (Selección de sociedad/cuenta → Previsualización y selección →
+  Resultado), según el diagrama de actividad de CU-02. El resultado se muestra como banner
+  dentro de la misma pantalla (éxito) o la reemplaza (corte de conexión con SAP, RF-09).
+- Validaciones relevantes: `Confirmar envío a SAP` se deshabilita con 0 movimientos
+  seleccionados; la confirmación es atómica (todo o nada) — si se pierde la conexión con SAP
+  a mitad del envío, no queda ningún movimiento del lote seleccionado impactado, para
+  cumplir RF-09 también cuando la confirmación es parcial.
+
+### Decisiones y pendientes de esta pantalla
+
+1. **Confirmado — detección de duplicados:** se agregó el campo `numero_operacion_bancaria`
+   a `MovimientoBancario` en el modelo ER (ver Decisión 5 en
+   [er-modelo.md](er-modelo.md)), porque sin un identificador propio del movimiento no había
+   forma de calcular la columna "posible duplicado" de este wireframe.
+2. **Confirmado — atomicidad de la selección parcial:** la confirmación de los movimientos
+   seleccionados es todo o nada. Si la conexión con SAP se corta a mitad de la operación, se
+   revierte/cancela el lote completo de seleccionados, igual que se decidió para CU-01.
+3. **Pendiente:** qué pasa con un movimiento deseleccionado por "posible duplicado" — si
+   queda disponible para la próxima sincronización o se descarta para siempre. Todavía no
+   está definido con el negocio.
 
 ---
 
@@ -73,4 +101,7 @@ alternativos en ícono-only buttons._
   del motivo del error (ej. "⚠️ CBU inválido (21 dígitos)"), nunca solo color rojo/verde, para
   que el Personal Administrativo Contable con daltonismo o baja visión pueda identificar y
   entender el error sin depender del color ni de un tooltip que requiera mouse.
+- En la previsualización de movimientos (CU-02), "Seleccionar todos"/"Ninguno" existen como
+  botones explícitos y no solo como un checkbox ambiguo en el encabezado de la tabla, para
+  que el Analista Contable pueda operar la selección masiva navegando por teclado.
 

@@ -73,6 +73,7 @@ Visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/).
 
 - `id_movimiento` (PK): identificador del movimiento.
 - `id_sincronizacion` (FK → `SincronizacionExtracto`): corrida que lo descargó.
+- `numero_operacion_bancaria`: identificador que asigna el banco a cada movimiento; permite detectar si ya fue descargado en una sincronización anterior (ver Decisión 5).
 - `fecha_movimiento`, `importe`, `tipo` (débito/crédito): datos del movimiento bancario.
 - `estado`: descargado / confirmado / impactado / rechazado (RF-07, RF-08).
 - `fecha_impacto_sap`: marca temporal del impacto en SAP, nula hasta que se confirma.
@@ -119,3 +120,7 @@ Para que una misma fila de auditoría pueda representar tanto un archivo TEF com
 ### Decisión 4 — `SincronizacionExtracto` como entidad de sesión
 
 RF-09 exige poder interrumpir "el proceso de sincronización" ante una pérdida de conexión con el ERP, evitando asientos duplicados parciales. Esa es una propiedad de una corrida completa de descarga, no de un movimiento individual: sin una entidad que agrupe la sesión, no habría dónde registrar que una sincronización quedó interrumpida. Por eso se incorporó `SincronizacionExtracto`, que cumple para el Módulo 2 el mismo rol que `LotePago` cumple para el Módulo 1: agrupar varios `MovimientoBancario` bajo una sola ejecución con estado propio (completa / interrumpida / error).
+
+### Decisión 5 — `numero_operacion_bancaria` en `MovimientoBancario` para detectar duplicados
+
+Al diseñar la pantalla de previsualización de movimientos (CU-02) se detectó que el modelo no tenía forma de marcar un movimiento como "posible duplicado" frente a una sincronización anterior, algo que también había señalado el docente: sin un identificador propio del movimiento bancario, dos sincronizaciones que descargan el mismo movimiento se ven como dos registros distintos e indistinguibles. Se agregó `numero_operacion_bancaria`, el identificador que asigna el propio banco a cada movimiento, para poder comparar contra los movimientos ya guardados de la misma cuenta antes de ofrecerlo para confirmación. No se modeló como una restricción `UNIQUE` a nivel de base de datos porque esa unicidad depende de la cuenta bancaria, y `CuentaBancaria` se alcanza solo indirectamente a través de `SincronizacionExtracto`; la comparación de duplicados queda a cargo de la aplicación al armar la previsualización, no de una constraint del motor.

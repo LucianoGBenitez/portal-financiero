@@ -1,0 +1,41 @@
+Wireframe de baja fidelidad — CU-02, paso 2 de 3 (Previsualización y confirmación de movimientos)
+
+Estado A — Previsualización, antes de confirmar
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Sincronización de Extractos Bancarios                                   │
+│  Sociedad: Holding SA   Cuenta: Banco Nación 123-456/7   Extracto: hoy   │
+├──────────────────────────────────────────────────────────────────────────┤
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ │
+│  │ Descargados   │ │ Seleccionados │ │ Posible        │ │ Importe neto  │ │
+│  │     34        │ │     30        │ │ duplicado: 2   │ │ $ 1.230.450   │ │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └───────────────┘ │
+│  [ ] Mostrar solo posibles duplicados      [Seleccionar todos] [Ninguno] │
+├───┬──────────┬────────────────────┬───────────┬────────────┬────────────┤
+│ Sel│ Fecha    │ Concepto           │ Tipo      │ Importe    │ Estado     │
+├───┼──────────┼────────────────────┼───────────┼────────────┼────────────┤
+│ [x]│ 13/10/26 │ Transferencia ACME │ Crédito   │ $ 120.000  │ Nuevo      │
+│ [x]│ 13/10/26 │ Pago proveedor X   │ Débito    │ $ 45.000   │ Nuevo      │
+│ [ ]│ 13/10/26 │ Transferencia ACME │ Crédito   │ $ 120.000  │ Posible duplicado (mismo numero_operacion_bancaria del 10/10) │
+│... │          │                    │           │            │            │
+├───┴──────────┴────────────────────┴───────────┴────────────┴────────────┤
+│  Solo los movimientos seleccionados se registrarán en el libro de bancos │
+│  de SAP. La confirmación es todo o nada: si se corta la conexión con SAP │
+│  a mitad de camino, no queda ningún movimiento de este envío impactado.  │
+│                                    [Volver]   [Confirmar envío a SAP]   │
+└──────────────────────────────────────────────────────────────────────────┘
+
+Estado B — Resultado (éxito)
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Sincronización completada                                               │
+│  28 confirmados y registrados en SAP · 2 rechazados · 0 con error        │
+│  PDF de control enviado por WhatsApp a Jefatura de Administración        │
+│                                               [Ver detalle]  [Finalizar] │
+└──────────────────────────────────────────────────────────────────────────┘
+
+Estado C — Corte de conexión con SAP (RF-09)
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Se perdió la conexión con SAP Business One                              │
+│  Ningún movimiento fue impactado. La sincronización fue cancelada para   │
+│  evitar asientos duplicados.                                             │
+│                                              [Reintentar]  [Cerrar]      │
+└──────────────────────────────────────────────────────────────────────────┘

@@ -65,6 +65,7 @@ entity MovimientoBancario {
   * id_movimiento : integer <<PK>>
   --
   id_sincronizacion : integer <<FK>>
+  numero_operacion_bancaria : varchar(50)
   fecha_movimiento : date
   importe : decimal(15,2)
   tipo : varchar(10)
