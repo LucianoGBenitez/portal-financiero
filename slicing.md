@@ -44,7 +44,7 @@ vez ni terminar en una iteración: es una épica.
 - **¿Alcanza con que el CBU tenga formato válido?** Un CBU puede tener 22 dígitos y no ser
   del proveedor. ¿Se cruza con el maestro de SAP (Módulo 3)?
 
-  **Respuesta:** El CBU no se carga aleatoriamente, los pagos se extraen directamente desde el ERP con el CBU y el resto de los datos necesarios según cada Proveedor / Socio de Negocio.
+  **Respuesta:** En la versión inicial (Historias 1 a 6), el analista carga la planilla interna de pagos (RF-01) y alcanza con validar que el CBU tenga formato sintáctico válido (22 dígitos y dígito verificador) para no bloquear la operatoria. En una evolución con mayor control (Parte B y Módulo 3), el sistema contrastará opcionalmente el CBU de la planilla contra el maestro de socios de negocio de SAP para advertir si el CBU informado en la planilla no coincide con la cuenta bancaria homologada en el ERP.
 
 - **¿Qué pasa con las filas excluidas?** ¿Se pierden o quedan pendientes para el lote
   siguiente? ¿Quién se entera de que ese proveedor no cobró?
@@ -204,7 +204,7 @@ decidirlo. Las preguntas están adaptadas a su dominio (en un portal de tesorer�
 | ¿Qué pasa si el CBU tiene formato válido pero no corresponde al CUIT del proveedor que figura en SAP? | El sistema debería cruzar el CBU contra el maestro de proveedores de SAP (no solo validar el formato); si no coincide, marcarlo como inconsistente y excluirlo del lote igual que los demás errores. | Negocio (define la regla de cruce contra SAP) y técnica (cómo se implementa la consulta) |
 | ¿Qué pasa si el mismo lote se genera dos veces y los dos archivos llegan a Interbanking? | El sistema debería detectar que ya existe un archivo generado con los mismos pagos y advertir antes de generar uno nuevo (ver Historia 7). | Negocio (define si se bloquea o solo se advierte) |
 | ¿Qué pasa si el sistema falla a mitad de armar el archivo? ¿Queda un archivo parcial que se puede descargar? | No debería quedar disponible ningún archivo parcial: la generación tiene que ser atómica (todo o nada); si falla, no se genera nada y se informa el error para reintentar. | Técnica (diseño de la generación como operación atómica) |
-| ¿Qué pasa si se corta la sesión justo después de confirmar, y el usuario no sabe si el lote se generó y lo vuelve a generar? | Al reingresar, el usuario debería poder revisar la bitácora (Historia 5) para confirmar si el lote ya se generó, antes de generarlo de nuevo. | Técnica (que la bitácora quede registrada apenas se genera el archivo) y negocio (que el flujo obligue a revisar la bitácora antes de reintentar) |
+| ¿Qué pasa si se corta la sesión justo después de confirmar, y el usuario no sabe si el lote se generó y lo vuelve a generar? | El sistema no debe delegar todo en el usuario: al reingresar al módulo, detecta proactivamente si hubo un lote generado en los últimos 30 minutos por el mismo usuario y muestra una alerta emergente destacada: *"Se generó un lote hace X minutos con Y pagos por $Z. ¿Desea descargar el archivo generado o iniciar un nuevo lote?"*. Si el usuario intenta subir el mismo archivo nuevamente, el sistema advierte que el lote ya fue procesado (ver Historia 7). | Técnica (detección automática de último lote por usuario/timestamp y modal de aviso) y negocio (definir el umbral de tiempo para la alerta y permitir re-descargar el archivo generado) |
 
 _La primera ya la respondieron en su CU-01 (E1): parte del trabajo ya está hecho. Las
 difíciles son las otras._
@@ -235,8 +235,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema verifica que el usuario esté autenticado y autorizado antes de iniciar la descarga.
-  2. El sistema descarga los movimientos de la cuenta configurada y los deja disponibles para revisión.
+  1. Dado un usuario autenticado con permisos contables y una cuenta bancaria seleccionada, el sistema se conecta a la API de Interbanking y recupera todos los movimientos del período sin alterar los registros existentes.
+  2. Cada movimiento descargado almacena fecha, descripción/concepto, importe, tipo (débito/crédito) y el identificador único de transacción bancaria devuelto por Interbanking.
+  3. Si no existen movimientos nuevos para el rango solicitado, el sistema informa "No se encontraron nuevos movimientos para la cuenta seleccionada" en pantalla sin registrar errores ni duplicados.
 
   ---
 
@@ -249,8 +250,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema muestra los movimientos descargados antes de enviarlos al ERP.
-  2. El usuario puede confirmar el envío de los movimientos revisados.
+  1. La previsualización presenta una grilla con los movimientos descargados permitiendo seleccionar o deseleccionar individualmente y en lote mediante casillas de verificación.
+  2. Muestra un resumen en tiempo real con la cantidad de movimientos seleccionados y los subtotales acumulados de débito y crédito a impactar.
+  3. El botón "Confirmar envío a SAP" solo se habilita si hay al menos un movimiento seleccionado, y requiere confirmación explícita en un cuadro de diálogo antes de ejecutar el impacto.
 
   ---
 
@@ -263,8 +265,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema registra cada movimiento confirmado como asiento en el libro de bancos de SAP.
-  2. El sistema clasifica cada movimiento en débito o crédito correctamente.
+  1. Por cada movimiento confirmado, el sistema genera el asiento correspondiente en el libro de bancos de SAP Business One respetando la cuenta contable y la columna de débito o crédito según el tipo de movimiento.
+  2. El sistema guarda el número de asiento generado por SAP devuelto por la API/Service Layer para garantizar la trazabilidad de la operación.
+  3. Los movimientos desmarcados o no confirmados permanecen en estado "Pendiente" y no generan ningún asiento contable en SAP.
 
   ---
 
@@ -277,8 +280,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. Si se pierde la conexión con SAP durante el registro, el sistema interrumpe el proceso sin dejar movimientos a medio registrar.
-  2. El sistema informa el error al analista contable.
+  1. Si ocurre una interrupción de conexión o timeout con SAP Business One durante el envío del lote, el sistema ejecuta una reversión atómica (rollback): ningún movimiento del lote queda en estado registrado ni con impacto parcial en SAP.
+  2. El sistema muestra un mensaje de error claro en pantalla ("Conexión interrumpida con SAP B1. El lote fue cancelado sin impactos parciales") y habilita el reintento completo del lote.
+  3. Se registra el incidente en la bitácora técnica con timestamp, código de error devuelto y usuario que ejecutaba la acción.
 
   ---
 
@@ -291,7 +295,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. Al finalizar, el sistema muestra la cantidad de movimientos en cada estado (descargados, confirmados, rechazados, con error).
+  1. Al finalizar el proceso de sincronización, el sistema muestra una vista de resumen con el desglose exacto: cantidad descargada, cantidad confirmada e impactada en SAP, cantidad omitida/rechazada y cantidad con fallos técnicos.
+  2. Permite exportar el resumen en formato PDF o planilla como comprobante de conciliación contable.
+  3. En caso de existir movimientos rechazados por validaciones de negocio de SAP, el reporte lista el ID del movimiento, motivo del rechazo y estado final.
 
   ---
 
@@ -304,8 +310,8 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema registra fecha, usuario, cuenta procesada y resultado de cada sincronización.
-  2. El sistema registra los mensajes técnicos devueltos por SAP o Interbanking.
+  1. Cada sincronización escribe una entrada inmutable en la bitácora con timestamp exacto, ID de usuario, cuenta bancaria procesada, cantidad de movimientos y resultado global (Éxito / Fallo / Cancelado).
+  2. Si hubo fallos de comunicación con SAP o Interbanking, se registran el código de respuesta HTTP y el mensaje de error técnico devuelto por el servicio externo.
 
 ### HU-03 — Sincronización de datos maestros (CBU)
 
@@ -323,7 +329,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema contrasta automáticamente los registros del padrón externo contra el maestro de SAP.
+  1. Dada una planilla externa con CUIT, CBU y Razón Social, el sistema busca cada CUIT en la tabla de Socios de Negocio (`OCRD`) de SAP Business One.
+  2. Compara el CBU de la planilla externa contra el CBU registrado actualmente en las cuentas bancarias del proveedor en SAP (`OCRB`).
+  3. El proceso de contraste es estrictamente de solo lectura y no altera ningún dato en SAP en esta etapa.
 
   ---
 
@@ -336,8 +344,11 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema clasifica cada resultado en una de las tres categorías definidas.
-  2. El sistema presenta los resultados agrupados antes de aplicar cualquier cambio.
+  1. El sistema clasifica cada registro del cruce en tres pestañas o secciones visuales independientes:
+     - *Actualización inmediata*: CUIT coincide y el CBU propuesto difiere del registrado en SAP.
+     - *Sugerencia por nombre*: CUIT no coincide exactamente pero la Razón Social tiene coincidencia aproximada.
+     - *Registro único / No encontrado*: CUIT y Razón Social no existen en SAP.
+  2. Cada fila presenta en columnas comparativas: CUIT, Razón Social, CBU actual en SAP y CBU nuevo propuesto.
 
   ---
 
@@ -350,8 +361,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El usuario puede confirmar la actualización masiva con una sola acción.
-  2. El sistema aplica el cambio solo a los registros confirmados.
+  1. El usuario puede seleccionar qué categorías aplicar (por defecto, la categoría de *Actualización inmediata*) y desmarcar socios individuales si lo considera necesario.
+  2. Al accionar "Actualizar CBU en SAP", el sistema invoca de forma transaccional el Service Layer/DI API de SAP actualizando únicamente los socios seleccionados y deshabilitando el botón para evitar ejecuciones duplicadas.
+  3. Los registros no seleccionados o con sugerencias pendientes permanecen sin modificar en SAP.
 
   ---
 
@@ -364,7 +376,8 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema informa la cantidad de registros actualizados, sugeridos y no encontrados al finalizar.
+  1. Al culminar la actualización, el sistema presenta un reporte final con indicadores numéricos: total de socios actualizados exitosamente en SAP, total de registros con error técnico y total de registros omitidos.
+  2. En caso de errores devueltos por el ERP al actualizar un proveedor puntual, se detalla el código de socio, CUIT y el mensaje devuelto por SAP sin abortar la actualización de los demás socios válidos.
 
 ### HU-04 — Autenticación y auditoría del sistema
 
@@ -383,7 +396,8 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema exige autenticación antes de permitir el acceso a cualquier módulo funcional.
+  1. Todo intento de acceso a cualquier ruta o módulo funcional del portal por parte de un usuario no autenticado redirige a la pantalla de inicio de sesión con estado HTTP 401/403.
+  2. La sesión caduca automáticamente tras 30 minutos de inactividad, invalidando la sesión y requiriendo un nuevo login para continuar operando.
 
   ---
 
@@ -396,8 +410,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema valida al usuario autenticado contra la lista blanca de cuentas autorizadas.
-  2. El sistema rechaza el acceso a cualquier cuenta no incluida en la lista.
+  1. Una vez autenticado el usuario, el sistema contrasta su identificador de cuenta contra la tabla de cuentas autorizadas (`lista_blanca`).
+  2. Si la cuenta no está autorizada, se bloquea el acceso mostrando: "Cuenta no autorizada para operar en el Portal Financiero. Contacte al administrador de IT".
+  3. Los intentos de acceso con cuentas válidas pero no autorizadas generan un registro de seguridad en la bitácora con IP, usuario y fecha/hora.
 
   ---
 
@@ -410,8 +425,8 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El sistema registra en la bitácora cada TEF generado y cada extracto procesado, con usuario, fecha/hora y resultado.
-  2. El sistema registra el estado y el mensaje técnico devuelto por SAP en cada actualización del maestro.
+  1. Toda acción transaccional (generar TEF, sincronizar extractos, actualizar CBU) genera un registro inmutable en la bitácora con: `id_evento`, `timestamp`, `id_usuario`, `modulo`, `accion`, `resultado` (SUCCESS/ERROR) y `detalle`.
+  2. En operaciones que interactúan con sistemas externos (SAP B1 o Interbanking), se almacena el código de respuesta y el mensaje técnico recibido.
 
   ---
 
@@ -424,7 +439,9 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
 
   **Criterios de aceptación**
 
-  1. El administrador de infraestructura / analista IT puede consultar el historial de operaciones registradas en la bitácora.
+  1. La interfaz de consulta de bitácora está restringida exclusivamente a usuarios con rol Administrador IT / Infraestructura (inaccesible para usuarios contables).
+  2. La vista permite filtrar los eventos por rango de fechas, módulo (TEF, Extractos, CBU, Seguridad), usuario y resultado (Éxito/Error).
+  3. La lista se visualiza paginada y ordenada cronológicamente de forma descendente, con opción de expandir el detalle técnico completo de cada evento.
 
 ---
 
