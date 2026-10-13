@@ -1,0 +1,63 @@
+Wireframe de baja fidelidad — CU-03 (Revisión de categorías del cruce de CBU y confirmación)
+
+Estado A — Revisión de categorías, antes de confirmar
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Sincronización de Datos Maestros (CBU)                                  │
+│  Padrón cargado: Interbanking_CBU_2026-10.csv   Fecha: 13/10/26          │
+├──────────────────────────────────────────────────────────────────────────┤
+│ ┌───────────┐┌────────────┐┌────────────┐┌───────────┐┌─────────────┐    │
+│ │Contrastad.││ Actualiz.  ││ Sugerencias││ Únicos    ││ Excluidos   │    │
+│ │   410     ││ inmediata: ││ por nombre:││(sin match)││ (CBU inv.)  │    │
+│ │           ││    180     ││     25     ││    200    ││     5       │    │
+│ └───────────┘└────────────┘└────────────┘└───────────┘└─────────────┘    │
+├──────────────────────────────────────────────────────────────────────────┤
+│ [●Actualiz. inmediata(180)] [Sugerencias(25)] [Únicos(200)] [Excluidos(5)]│
+├───┬────────────┬──────────────────┬──────────────────┬──────────────────┤
+│Sel│ CUIT       │ Nombre (SAP)     │ CBU actual (SAP) │ CBU nuevo (padrón)│
+├───┼────────────┼──────────────────┼──────────────────┼──────────────────┤
+│[x]│ 20304050607│ ACME SA          │ 0070999030004... │ 0170999030009... │
+│[x]│ 20304050608│ LOPEZ SRL        │ 0110999030001... │ 0110999030099... │
+│...│            │                  │                  │                  │
+├───┴────────────┴──────────────────┴──────────────────┴──────────────────┤
+│  Coincidencia exacta de CUIT: pre-seleccionadas. Podés destildar antes   │
+│  de confirmar.                              [Volver] [Confirmar actualiz.]│
+└──────────────────────────────────────────────────────────────────────────┘
+
+Tab "Sugerencias por nombre" (coincidencia parcial, SIN preseleccionar por defecto):
+┌───┬────────────┬─────────────┬────────────────────┬────────────┬──────────────┐
+│Sel│ CUIT       │ Nombre (SAP)│ Nombre (padrón)     │ CBU actual │ CBU sugerido │
+├───┼────────────┼─────────────┼────────────────────┼────────────┼──────────────┤
+│[ ]│ 20304050700│ PEREZ JUAN  │ PEREZ J.            │ 011...     │ 017...       │
+└───┴────────────┴─────────────┴────────────────────┴────────────┴──────────────┘
+Nota: no se muestra score de similitud (fuera de alcance por ahora, ver
+docs/diseño-ui.md, "Mejoras futuras").
+
+Tab "Registros únicos" (sin checkbox, solo informativo):
+┌────────────┬──────────────────┬───────────────────┐
+│ CUIT       │ Nombre (padrón)  │ CBU (padrón)       │
+├────────────┼──────────────────┼───────────────────┤
+│ 20304099999│ NUEVO PROVEEDOR  │ 019...             │
+└────────────┴──────────────────┴───────────────────┘
+"Sin coincidencia en el maestro de SAP; no se puede aplicar una actualización automática."
+
+Tab "Excluidos" (CU-03, excepción E2 — CBU inválido del padrón):
+┌────────────┬──────────────────┬───────────────────┬──────────────────────┐
+│ CUIT       │ Nombre (padrón)  │ CBU (padrón)       │ Motivo               │
+├────────────┼──────────────────┼───────────────────┼──────────────────────┤
+│ 20304000001│ XYZ SRL          │ 12345              │ CBU inválido (5 díg.)│
+└────────────┴──────────────────┴───────────────────┴──────────────────────┘
+
+Estado B — Resultado (éxito)
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Actualización completada                                                │
+│  178 actualizados · 2 con error · 200 no encontrados (registros únicos)  │
+│                                               [Ver detalle]  [Finalizar] │
+└──────────────────────────────────────────────────────────────────────────┘
+
+Estado C — Corte de conexión con SAP durante la actualización
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Se perdió la conexión con SAP Business One                              │
+│  No se aplicó ningún cambio. La actualización fue cancelada para evitar  │
+│  cambios parciales en el maestro de proveedores.                        │
+│                                              [Reintentar]  [Cerrar]      │
+└──────────────────────────────────────────────────────────────────────────┘

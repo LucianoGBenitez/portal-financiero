@@ -90,6 +90,75 @@ sistema nunca auto-confirma algo que sospecha que ya fue impactado antes.
 
 ---
 
+## Pantalla / Módulo 3 — Revisión de categorías del cruce de CBU y confirmación (CU-03)
+
+**Wireframe:** [`diagramas/wireframes/cu03-revision-categorias-cbu.txt`](../diagramas/wireframes/cu03-revision-categorias-cbu.txt)
+
+**Patrones de diseño utilizados:** Tabs para categorías mutuamente excluyentes, tarjetas de
+resumen (KPI cards), tabla con selección múltiple, banner de estado (éxito / error).
+
+**Justificación:** RF-11 clasifica el cruce en tres categorías y HU-03 (criterio 3) exige
+presentarlas agrupadas antes de aplicar cualquier cambio en SAP — un patrón de tabs resuelve
+esto mejor que una sola tabla de 400+ filas con una columna "categoría", porque el usuario
+(Personal Administrativo Contable) puede enfocarse en un grupo de riesgo a la vez. Dentro de
+cada tab, la selección por fila varía según el riesgo de la categoría: "Actualización
+inmediata" (coincidencia exacta de CUIT) viene pre-seleccionada porque el riesgo de error es
+bajo; "Sugerencias por nombre" (coincidencia parcial) viene sin seleccionar, porque aplicar
+una sugerencia equivocada significa pagarle a la cuenta incorrecta de un proveedor y requiere
+juicio humano explícito. "Registros únicos" y "Excluidos" son solo informativos: no hay match
+en SAP para aplicar un cambio automático.
+
+**Formulario (si aplica):**
+- Cantidad de campos: no es un formulario de carga; tiene 4 tabs, 1 checkbox por fila en las
+  2 tabs accionables, y 2 acciones finales (`Volver`, `Confirmar actualización`).
+- Flujo: una sola pantalla con navegación por tabs (no es step-by-step), según CU-03 y su
+  diagrama de actividad: contrastar → clasificar → revisar → confirmar.
+- Validaciones relevantes: `Confirmar actualización` actúa solo sobre las filas
+  seleccionadas (de cualquier tab accionable); si se pierde la conexión con SAP durante la
+  actualización masiva, no se aplica ningún cambio parcial (CU-03, excepción E1), igual
+  criterio de atomicidad que en CU-01 y CU-02.
+
+### Decisiones y mejoras futuras de esta pantalla
+
+1. **Confirmado — pre-selección por riesgo:** "Actualización inmediata" pre-tildada,
+   "Sugerencias por nombre" sin tildar por defecto.
+2. **Mejora futura (fuera de alcance por ahora):** mostrar un porcentaje de similitud en
+   "Sugerencias por nombre" para ayudar a priorizar la revisión. Ningún RF lo exige
+   actualmente; se deja marcado para una futura iteración en vez de bloquear esta pantalla.
+
+---
+
+## Pantalla / Módulo 4 — Login y consulta de bitácora (CU-04)
+
+**Wireframe:** [`diagramas/wireframes/cu04-login-bitacora.txt`](../diagramas/wireframes/cu04-login-bitacora.txt)
+
+**Patrones de diseño utilizados:** Formulario simple (login), vistas separadas por pestaña
+para historiales de distinto origen, tabla con filtros (rango de fechas, tipo, resultado).
+
+**Justificación:** El login es un formulario mínimo (RF-13): usuario corporativo y
+contraseña. El mensaje de error ante credenciales inválidas es **genérico** — no distingue
+si el usuario no está en la lista blanca o si la contraseña es incorrecta — para evitar que
+alguien infiera qué cuentas corporativas existen probando usuarios (enumeración de cuentas,
+un riesgo de seguridad real en un sistema que mueve transferencias bancarias).
+
+Para la consulta de bitácora (Administrador de Infraestructura / Analista IT), se evaluó una
+vista unificada que mezclara `BitacoraAuditoria` (TEF/Extracto) y `ActualizacionMaestroCBU`
+(CBU) en una sola tabla, pero se descartó: son dos entidades con columnas distintas (la
+bitácora tiene `notificado`; las actualizaciones de CBU tienen `mensaje_tecnico` por socio) y
+unificarlas requeriría una consulta combinada (`UNION`) con columnas que no siempre
+coinciden. Se optó por **dos vistas separadas** (una pestaña por tipo), cada una mostrando
+exactamente las columnas de su propia entidad, más simple de construir y igual de útil para
+auditar.
+
+**Formulario (si aplica):**
+- Cantidad de campos (login): 2 (usuario, contraseña) + 1 acción (`Ingresar`).
+- Flujo: todo en una sola pantalla para cada caso (login; consulta con pestañas).
+- Validaciones relevantes: el login rechaza cualquier cuenta fuera de la lista blanca
+  (RF-13) sin revelar el motivo específico; cada intento fallido queda registrado en la
+  bitácora (CU-04, excepción E1).
+
+---
+
 ## Consideraciones de accesibilidad
 
 _Al menos una consideración concreta, relacionada con el sistema y sus usuarios reales
