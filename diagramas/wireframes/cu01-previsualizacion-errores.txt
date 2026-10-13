@@ -1,0 +1,25 @@
+Wireframe de baja fidelidad — CU-01, paso 3 de 4 (Previsualización de planilla con errores)
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Generación de Transferencias Masivas (TEF)         Paso 3 de 4          │
+│  ①Carga ──── ②Mapeo ──── ●Previsualización ──── ④Confirmación           │
+├──────────────────────────────────────────────────────────────────────────┤
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ │
+│  │ Total filas   │ │ Válidas       │ │ Con error     │ │ Importe total │ │
+│  │     128       │ │     120       │ │      8        │ │ $ 4.512.300   │ │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └───────────────┘ │
+│  [ ] Mostrar solo filas con error              🔍 Buscar por CUIT/nombre │
+├─────┬───────────────────┬────────────┬───────────┬───────────┬──────────┤
+│ Fila│ CBU               │ CUIT       │ Nombre    │ Importe   │ Estado   │
+├─────┼───────────────────┼────────────┼───────────┼───────────┼──────────┤
+│ 1   │ 0070999030004...  │ 20304050607│ ACME SA   │ $120.000  │ Válido   │
+│ 2   │ 007099903000456   │ 20304050608│ LOPEZ SRL │ $85.000   │ CBU inválido (21 dígitos) │
+│ 3   │ 0070999030004567  │ 203040506  │ PEREZ J.  │ $45.000   │ CUIT inválido │
+│ ... │                   │            │           │           │          │
+├─────┴───────────────────┴────────────┴───────────┴───────────┴──────────┤
+│  Las filas marcadas con error no se incluirán en el archivo TEF.         │
+│                                   [Volver al mapeo]  [Confirmar y generar TEF] │
+└──────────────────────────────────────────────────────────────────────────┘
+
+Nota: en la maqueta visual cada fila de "Estado" combina ícono (✅/⚠️) + texto del motivo,
+nunca solo color (ver justificación de accesibilidad en docs/diseño-ui.md).

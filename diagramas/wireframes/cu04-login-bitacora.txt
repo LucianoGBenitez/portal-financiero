@@ -1,0 +1,39 @@
+Wireframe de baja fidelidad — CU-04 (Autenticación y Auditoría)
+
+Pantalla A — Login
+┌───────────────────────────────┐
+│   Portal Financiero           │
+│   Usuario corporativo         │
+│   [____________________]      │
+│   Contraseña                  │
+│   [____________________]      │
+│            [ Ingresar ]        │
+│   "Usuario o contraseña        │
+│    incorrectos"  (si falla)    │
+└───────────────────────────────┘
+Nota de seguridad: el mensaje de error es genérico (no distingue si el usuario
+no existe en la lista blanca o si la contraseña es incorrecta), para evitar
+enumeración de cuentas válidas (OWASP - fuerza bruta / enumeración de usuarios).
+
+Pantalla B — Consulta de bitácora (Administrador de Infraestructura / Analista IT)
+Opción B confirmada: vistas separadas por tipo de operación, sin unificar.
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Bitácora de auditoría                                                    │
+│  [●Archivos TEF y Extractos]   [ Actualizaciones de CBU ]                │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Desde [ 01/10/26 ] Hasta [ 13/10/26 ]  Tipo [Todos ▾]  Resultado [Todos ▾]│
+├───────────┬────────────┬──────────────┬───────────┬──────────┬──────────┤
+│ Fecha/hora│ Usuario    │ Tipo         │ Resultado │ Notificado│ Detalle  │
+├───────────┼────────────┼──────────────┼───────────┼──────────┼──────────┤
+│ 13/10 09:12│ jperez    │ TEF          │ Éxito     │ Sí       │[Ver más] │
+│ 13/10 10:05│ agarcia   │ Extracto     │ Error     │ No       │[Ver más] │
+└───────────┴────────────┴──────────────┴───────────┴──────────┴──────────┘
+
+Tab "Actualizaciones de CBU" (tabla propia, sobre ActualizacionMaestroCBU):
+┌───────────┬────────────┬──────────────┬───────────┬──────────────────────┐
+│ Fecha/hora│ Usuario    │ Socio (CUIT) │ Estado    │ Mensaje técnico      │
+├───────────┼────────────┼──────────────┼───────────┼──────────────────────┤
+│ 13/10 11:40│ jperez    │ 20304050607  │ Success   │ -                    │
+│ 13/10 11:41│ jperez    │ 20304050608  │ Error     │ Timeout Service Layer│
+└───────────┴────────────┴──────────────┴───────────┴──────────────────────┘
