@@ -24,7 +24,7 @@
 | Negociable | Sí | El formato de la previsualización y los mensajes de error pueden definirse con el equipo contable. |
 | Valiosa | Sí | Reduce errores de carga y permite obtener un archivo TEF listo para Interbanking. |
 | Estimable | Sí | El alcance está limitado a carga, validación, previsualización y exportación. |
-| Pequeña | Sí | Se limita a una generación de archivo por lote de pagos. |
+| Pequeña | No (es una épica) | Abarca 5 requisitos funcionales (RF-01 a RF-05), múltiples formatos de archivo, detección de columnas, validaciones y exportación en formato bancario. Como se detalló en el ejercicio de slicing vertical, debe descomponerse en historias más pequeñas para poder abordarse en iteraciones. |
 | Verificable | Sí | Puede probarse con archivos válidos, inválidos y con distintas extensiones. |
 
 ---
@@ -56,7 +56,7 @@
 | Negociable | Sí | El formato de la previsualización y del reporte puede acordarse con contabilidad. |
 | Valiosa | Sí | Reduce la carga manual de extractos y mejora la trazabilidad de los movimientos. |
 | Estimable | Sí | El alcance se limita a una cuenta bancaria y a un proceso de sincronización. |
-| Pequeña | Sí, con alcance acotado | Debe implementarse inicialmente para una cuenta y un tipo de extracto definido. |
+| Pequeña | No (es una épica) | Engloba conexión externa con Interbanking, previsualización, impacto transaccional en el libro de bancos de SAP Business One, manejo de cortes y bitácora. En el documento de slicing vertical se dividió en historias independientes. |
 | Verificable | Sí | Puede probarse con movimientos válidos, errores de conexión y respuestas fallidas de SAP. |
 
 ## HU-03 — Sincronización de datos maestros (CBU)
@@ -83,7 +83,7 @@
 | Negociable | Sí | Los criterios de coincidencia (exacta/por nombre) pueden ajustarse con contabilidad. |
 | Valiosa | Sí | Evita la actualización manual de CBU uno por uno en SAP. |
 | Estimable | Sí | El alcance se limita a comparar, clasificar y actualizar el maestro. |
-| Pequeña | Sí | Se limita a un cruce y una actualización masiva por ejecución. |
+| Pequeña | No (es una épica) | Combina la ingesta de padrón externo, reglas de matching en tres categorías, interfaz de revisión previa e impacto masivo en SAP. Requiere ser abordada mediante historias verticales más acotadas según lo definido en slicing vertical. |
 | Verificable | Sí | Puede probarse con coincidencias exactas, parciales y registros sin match. |
 
 ---
@@ -112,5 +112,5 @@
 | Negociable | Sí | El detalle de los campos de la bitácora puede ajustarse con IT. |
 | Valiosa | Sí | Protege el acceso al sistema y da trazabilidad ante auditorías. |
 | Estimable | Sí | El alcance se limita a autenticación, lista blanca y registro de bitácora. |
-| Pequeña | Sí | No incluye gestión de roles ni permisos granulares, solo acceso/no acceso. |
+| Pequeña | No (es una épica) | Agrupa autenticación perimetral con lista blanca, módulo transversal de bitácora de auditoría e interfaz de consulta para IT. Fue dividida en historias verticales en el slicing. |
 | Verificable | Sí | Puede probarse con usuarios autorizados, no autorizados y fallos del ERP. |
