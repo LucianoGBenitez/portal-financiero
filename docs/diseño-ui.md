@@ -9,6 +9,8 @@ _Los wireframes en imagen o PDF van en `diagramas/wireframes/`; acá se document
 
 **Wireframe:** [`diagramas/wireframes/cu01-previsualizacion-errores.txt`](../diagramas/wireframes/cu01-previsualizacion-errores.txt)
 
+![Wireframe CU-01: previsualización de planilla con errores](../diagramas/wireframes/images/cu01-previsualizacion.svg)
+
 **Patrones de diseño utilizados:** Stepper / step-by-step, tarjetas de resumen (KPI cards), tabla con filtro y búsqueda, badges de estado (ícono + texto).
 
 **Justificación:** El usuario de esta pantalla es el Personal Administrativo Contable, un
@@ -50,6 +52,8 @@ sin depender del mouse.
 ## Pantalla / Módulo 2 — Previsualización y confirmación de movimientos bancarios (CU-02, paso 2 de 3)
 
 **Wireframe:** [`diagramas/wireframes/cu02-previsualizacion-movimientos.txt`](../diagramas/wireframes/cu02-previsualizacion-movimientos.txt)
+
+![Wireframe CU-02: previsualización y confirmación de movimientos bancarios](../diagramas/wireframes/images/cu02-previsualizacion-movimientos.svg)
 
 **Patrones de diseño utilizados:** Tabla con selección múltiple (checkboxes), tarjetas de
 resumen (KPI cards), banner de estado (éxito / error) en lugar de modal bloqueante.
@@ -94,6 +98,8 @@ sistema nunca auto-confirma algo que sospecha que ya fue impactado antes.
 
 **Wireframe:** [`diagramas/wireframes/cu03-revision-categorias-cbu.txt`](../diagramas/wireframes/cu03-revision-categorias-cbu.txt)
 
+![Wireframe CU-03: revisión de categorías del cruce de CBU](../diagramas/wireframes/images/cu03-revision-categorias-cbu.svg)
+
 **Patrones de diseño utilizados:** Tabs para categorías mutuamente excluyentes, tarjetas de
 resumen (KPI cards), tabla con selección múltiple, banner de estado (éxito / error).
 
@@ -131,6 +137,8 @@ en SAP para aplicar un cambio automático.
 ## Pantalla / Módulo 4 — Login y consulta de bitácora (CU-04)
 
 **Wireframe:** [`diagramas/wireframes/cu04-login-bitacora.txt`](../diagramas/wireframes/cu04-login-bitacora.txt)
+
+![Wireframe CU-04: pantallas de login y consulta de bitácora](../diagramas/wireframes/images/cu04-login-bitacora.svg)
 
 **Patrones de diseño utilizados:** Formulario simple (login), vistas separadas por pestaña
 para historiales de distinto origen, tabla con filtros (rango de fechas, tipo, resultado).

@@ -1,76 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
-  <rect width="1365" height="768" fill="#f3f4f6"/>
-  <rect x="20" y="20" width="1325" height="728" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect width="1365" height="768" fill="#eef2f1"/>
+  <rect x="24" y="20" width="1317" height="728" rx="4" fill="#ffffff" stroke="#cbd5d1"/>
+  <rect x="24" y="20" width="1317" height="72" fill="#173b3a"/>
+  <text x="56" y="52" font-size="19" font-weight="700" fill="#ffffff">Portal Financiero</text>
+  <text x="56" y="74" font-size="11" fill="#d7e5e1">Tesorería / Generación de transferencias</text>
+  <text x="1135" y="62" font-size="12" fill="#ffffff">jperez  ·  Cerrar sesión</text>
+  <text x="56" y="125" font-size="11" font-weight="700" fill="#58716c">CU-01  /  PASO 3 DE 4</text>
+  <text x="56" y="160" font-size="25" font-weight="700" fill="#172b2a">Previsualización de planilla</text>
+  <text x="56" y="183" font-size="12" fill="#657875">Revisá las filas y sus validaciones antes de generar el archivo TEF.</text>
 
-  <text x="56" y="64" font-size="18" font-weight="700" fill="#1f2937">Portal Financiero</text>
-  <text x="56" y="92" font-size="11" fill="#64748b">Módulo de tesorería y pagos</text>
-
-  <rect x="910" y="38" width="400" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-  <text x="930" y="60" font-size="11" fill="#475569">Ambiente: Producción</text>
-  <rect x="1004" y="38" width="300" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-  <text x="1020" y="60" font-size="11" fill="#475569">Usuario: operador_finanzas_01</text>
-
-  <g>
-    <rect x="56" y="126" width="520" height="260" fill="#f8fafc" stroke="#d1d5db"/>
-    <text x="72" y="150" font-size="12" fill="#6b7280">ACCESO / AUDITORÍA PÚBLICA</text>
-    <text x="72" y="198" font-size="30" font-weight="700" fill="#111827">Portal Financiero</text>
-    <text x="72" y="224" font-size="12" fill="#64748b">Acceso corporativo · Ingrese credenciales de red o consulte</text>
-    <text x="72" y="240" font-size="12" fill="#64748b">la bitácora pública de ejecuciones.</text>
-
-    <rect x="72" y="260" width="220" height="38" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="88" y="284" font-size="12" fill="#64748b">Usuario</text>
-    <rect x="72" y="312" width="220" height="38" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="88" y="336" font-size="12" fill="#64748b">Contraseña</text>
-
-    <rect x="72" y="370" width="200" height="36" fill="#111827"/>
-    <text x="116" y="393" font-size="13" fill="#ffffff" font-weight="700">Ingresar</text>
+  <g font-size="11" fill="#536763">
+    <rect x="56" y="202" width="1250" height="40" rx="3" fill="#f7f9f8" stroke="#d6dfdc"/>
+    <text x="82" y="227" font-weight="700" fill="#287267">1  Carga</text>
+    <text x="300" y="227">────────</text>
+    <text x="410" y="227" font-weight="700" fill="#287267">2  Mapeo</text>
+    <text x="608" y="227">────────</text>
+    <rect x="720" y="210" width="192" height="24" rx="3" fill="#dcece7"/>
+    <text x="736" y="227" font-weight="700" fill="#145b52">3  Previsualización</text>
+    <text x="936" y="227">────────</text>
+    <text x="1050" y="227">4  Confirmación</text>
   </g>
 
   <g>
-    <rect x="620" y="126" width="640" height="260" fill="#f8fafc" stroke="#d1d5db"/>
-    <rect x="648" y="154" width="160" height="54" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="670" y="177" font-size="11" fill="#64748b">Módulos activos</text>
-    <text x="670" y="198" font-size="28" font-weight="700" fill="#111827">3</text>
-    <text x="900" y="154" width="200" font-size="11" fill="#64748b">Eventos hoy</text>
-    <text x="900" y="198" font-size="28" font-weight="700" fill="#111827">1.482</text>
-    <text x="892" y="222" font-size="11" fill="#64748b">99,2% exitosos (OK)</text>
-
-    <rect x="648" y="280" width="500" height="72" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="664" y="310" font-size="13" fill="#111827">Aviso de seguridad: La bitácora inferior registra transacciones</text>
-    <text x="664" y="328" font-size="13" fill="#111827">en tiempo real. Revisa los movimientos con cuidado.</text>
+    <rect x="56" y="260" width="292" height="78" rx="3" fill="#ffffff" stroke="#d6dfdc"/>
+    <text x="74" y="284" font-size="11" fill="#657875">TOTAL DE FILAS</text><text x="74" y="321" font-size="27" font-weight="700" fill="#172b2a">128</text>
+    <rect x="368" y="260" width="292" height="78" rx="3" fill="#ffffff" stroke="#d6dfdc"/>
+    <text x="386" y="284" font-size="11" fill="#657875">FILAS VÁLIDAS</text><text x="386" y="321" font-size="27" font-weight="700" fill="#287267">120</text>
+    <rect x="680" y="260" width="292" height="78" rx="3" fill="#ffffff" stroke="#d6dfdc"/>
+    <text x="698" y="284" font-size="11" fill="#657875">CON ERROR</text><text x="698" y="321" font-size="27" font-weight="700" fill="#a34732">8</text>
+    <rect x="992" y="260" width="314" height="78" rx="3" fill="#ffffff" stroke="#d6dfdc"/>
+    <text x="1010" y="284" font-size="11" fill="#657875">IMPORTE TOTAL</text><text x="1010" y="321" font-size="25" font-weight="700" fill="#172b2a">$ 4.512.300</text>
   </g>
 
-  <g>
-    <rect x="56" y="430" width="1204" height="220" fill="#f8fafc" stroke="#d1d5db"/>
-    <rect x="76" y="454" width="180" height="22" fill="#f3f4f6" stroke="#d1d5db"/>
-    <text x="90" y="470" font-size="11" fill="#334155">Bitácora</text>
+  <rect x="56" y="358" width="1250" height="42" fill="#f7f9f8" stroke="#d6dfdc"/>
+  <rect x="74" y="371" width="15" height="15" fill="#ffffff" stroke="#71837f"/>
+  <text x="98" y="383" font-size="12" fill="#334845">Mostrar solo filas con error</text>
+  <text x="844" y="383" font-size="12" fill="#657875">Buscar por CUIT o nombre</text>
+  <rect x="1028" y="366" width="258" height="26" rx="2" fill="#ffffff" stroke="#cbd5d1"/>
+  <text x="1042" y="384" font-size="11" fill="#879691">CUIT / nombre</text>
 
-    <rect x="910" y="452" width="290" height="30" fill="#fff" stroke="#d1d5db"/>
-    <text x="928" y="472" font-size="11" fill="#374151">Filtrar</text>
-
-    <rect x="78" y="500" width="1120" height="46" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="94" y="528" font-size="11" fill="#475569">Fecha</text>
-    <text x="222" y="528" font-size="11" fill="#475569">Usuario</text>
-    <text x="404" y="528" font-size="11" fill="#475569">Tipo</text>
-    <text x="600" y="528" font-size="11" fill="#475569">Resultado</text>
-    <text x="820" y="528" font-size="11" fill="#475569">Detalle</text>
-
-    <rect x="78" y="548" width="1120" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="94" y="570" font-size="11" fill="#334155">2026-10-05</text>
-    <text x="222" y="570" font-size="11" fill="#334155">admin_tec</text>
-    <text x="404" y="570" font-size="11" fill="#334155">TEF</text>
-    <text x="600" y="570" font-size="11" fill="#22c55e">OK</text>
-    <text x="820" y="570" font-size="11" fill="#334155">Generación del archivo completada</text>
-
-    <rect x="78" y="584" width="1120" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="94" y="606" font-size="11" fill="#334155">2026-10-05</text>
-    <text x="222" y="606" font-size="11" fill="#334155">analista_01</text>
-    <text x="404" y="606" font-size="11" fill="#334155">Actualización CBU</text>
-    <text x="600" y="606" font-size="11" fill="#f59e0b">Warning</text>
-    <text x="820" y="606" font-size="11" fill="#334155">3 registros revisados manualmente</text>
+  <rect x="56" y="416" width="1250" height="36" fill="#e8efed" stroke="#cbd5d1"/>
+  <g font-size="11" font-weight="700" fill="#435a55">
+    <text x="74" y="439">FILA</text><text x="142" y="439">CBU</text><text x="386" y="439">CUIT</text><text x="568" y="439">NOMBRE</text><text x="826" y="439">IMPORTE</text><text x="1012" y="439">ESTADO / MOTIVO</text>
   </g>
-
-  <rect x="54" y="676" width="1256" height="40" fill="#f8fafc" stroke="#d1d5db"/>
-  <text x="70" y="702" font-size="12" fill="#475569">© 2026 Portal Financiero</text>
+  <g font-size="12" fill="#263b37">
+    <rect x="56" y="452" width="1250" height="48" fill="#ffffff" stroke="#e0e6e4"/>
+    <text x="74" y="481">1</text><text x="142" y="481">00709990300045678901</text><text x="386" y="481">20-30405060-7</text><text x="568" y="481">ACME S.A.</text><text x="826" y="481">$ 120.000</text><text x="1012" y="481" fill="#287267">OK  ·  Válido</text>
+    <rect x="56" y="500" width="1250" height="48" fill="#fffaf8" stroke="#ead9d3"/>
+    <text x="74" y="529">2</text><text x="142" y="529">007099903000456</text><text x="386" y="529">20-30405060-8</text><text x="568" y="529">LÓPEZ S.R.L.</text><text x="826" y="529">$ 85.000</text><text x="1012" y="529" fill="#a34732">!  CBU inválido (21 dígitos)</text>
+    <rect x="56" y="548" width="1250" height="48" fill="#ffffff" stroke="#e0e6e4"/>
+    <text x="74" y="577">3</text><text x="142" y="577">01709990300098765432</text><text x="386" y="577">20-3040506</text><text x="568" y="577">PÉREZ JUAN</text><text x="826" y="577">$ 45.000</text><text x="1012" y="577" fill="#a34732">!  CUIT inválido</text>
+  </g>
+  <text x="74" y="625" font-size="11" fill="#657875">Las filas con error se excluyen del archivo TEF. La tabla es de solo lectura.</text>
+  <text x="74" y="696" font-size="11" fill="#657875">Mostrando 3 de 128 filas  ·  120 válidas para exportación</text>
+  <rect x="914" y="670" width="166" height="38" rx="3" fill="#ffffff" stroke="#aebdb8"/>
+  <text x="954" y="694" font-size="12" font-weight="700" fill="#334845">Volver al mapeo</text>
+  <rect x="1094" y="670" width="212" height="38" rx="3" fill="#17685d"/>
+  <text x="1114" y="694" font-size="12" font-weight="700" fill="#ffffff">Confirmar y generar TEF</text>
 </svg>
 

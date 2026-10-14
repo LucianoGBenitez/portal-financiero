@@ -1,74 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
-  <rect width="1365" height="768" fill="#f3f4f6"/>
-  <rect x="20" y="20" width="1325" height="728" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1365" height="900" viewBox="0 0 1365 900" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1365" height="900" fill="#eef2f1"/>
+  <rect x="24" y="20" width="1317" height="860" rx="4" fill="#ffffff" stroke="#cbd5d1"/>
+  <rect x="24" y="20" width="1317" height="72" fill="#173b3a"/>
+  <text x="56" y="52" font-size="19" font-weight="700" fill="#ffffff">Portal Financiero</text>
+  <text x="56" y="74" font-size="11" fill="#d7e5e1">CU-04  /  Acceso y auditoría</text>
+  <text x="1135" y="62" font-size="12" fill="#ffffff">Vistas del módulo</text>
+  <text x="56" y="124" font-size="11" font-weight="700" fill="#58716c">DOS PANTALLAS SEPARADAS</text>
+  <text x="56" y="151" font-size="22" font-weight="700" fill="#172b2a">Autenticación y consulta de bitácora</text>
 
-  <text x="50" y="58" font-size="18" font-weight="700" fill="#111827">Sistema Portal Financiero</text>
-  <text x="420" y="58" font-size="12" fill="#64748b">Módulo de seguridad, acceso &amp; auditoría</text>
-  <rect x="980" y="30" width="280" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-  <text x="1000" y="52" font-size="11" fill="#475569">Ambiente: Producción</text>
-  <rect x="1126" y="30" width="200" height="34" fill="#ffffff" stroke="#cbd5e1"/>
-  <text x="1144" y="52" font-size="11" fill="#475569">Sesión: no autenticada</text>
+  <rect x="56" y="178" width="386" height="660" rx="3" fill="#f7f9f8" stroke="#d6dfdc"/>
+  <text x="78" y="210" font-size="11" font-weight="700" fill="#58716c">VISTA A  /  LOGIN</text>
+  <text x="78" y="254" font-size="25" font-weight="700" fill="#172b2a">Ingresar al portal</text>
+  <text x="78" y="278" font-size="12" fill="#657875">Usá tus credenciales corporativas.</text>
+  <text x="78" y="326" font-size="12" font-weight="700" fill="#334845">Usuario corporativo</text>
+  <rect x="78" y="338" width="342" height="42" rx="2" fill="#ffffff" stroke="#aebdb8"/>
+  <text x="94" y="364" font-size="12" fill="#879691">nombre.apellido</text>
+  <text x="78" y="414" font-size="12" font-weight="700" fill="#334845">Contraseña</text>
+  <rect x="78" y="426" width="342" height="42" rx="2" fill="#ffffff" stroke="#aebdb8"/>
+  <text x="94" y="452" font-size="14" fill="#879691">••••••••••••</text>
+  <rect x="78" y="492" width="342" height="42" rx="3" fill="#17685d"/>
+  <text x="218" y="518" font-size="13" font-weight="700" fill="#ffffff">Ingresar</text>
+  <rect x="78" y="556" width="342" height="58" rx="2" fill="#fff8f5" stroke="#e4c9bf"/>
+  <text x="94" y="580" font-size="11" font-weight="700" fill="#934530">Usuario o contraseña incorrectos</text>
+  <text x="94" y="598" font-size="10" fill="#80584d">Mensaje genérico para proteger las cuentas.</text>
+  <text x="78" y="672" font-size="10" fill="#657875">Los intentos fallidos quedan registrados</text>
+  <text x="78" y="688" font-size="10" fill="#657875">en la bitácora de auditoría.</text>
 
-  <g>
-    <rect x="52" y="112" width="520" height="260" fill="#f8fafc" stroke="#d1d5db"/>
-    <text x="70" y="140" font-size="12" fill="#64748b">ACCESO / AUDITORÍA PÚBLICA</text>
-    <text x="70" y="186" font-size="30" font-weight="700" fill="#111827">Portal Financiero</text>
-    <text x="70" y="212" font-size="12" fill="#64748b">Acceso corporativo · Ingrese credenciales de red o consulte</text>
-    <text x="70" y="228" font-size="12" fill="#64748b">la bitácora pública de ejecuciones.</text>
-
-    <rect x="70" y="250" width="240" height="36" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="86" y="273" font-size="12" fill="#64748b">Usuario</text>
-    <rect x="70" y="298" width="240" height="36" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="86" y="321" font-size="12" fill="#64748b">Contraseña</text>
-
-    <rect x="70" y="352" width="200" height="36" fill="#111827"/>
-    <text x="116" y="375" font-size="13" fill="#ffffff" font-weight="700">Ingresar</text>
+  <rect x="462" y="178" width="844" height="660" rx="3" fill="#ffffff" stroke="#d6dfdc"/>
+  <text x="484" y="210" font-size="11" font-weight="700" fill="#58716c">VISTA B  /  CONSULTA DE BITÁCORA</text>
+  <text x="484" y="246" font-size="21" font-weight="700" fill="#172b2a">Bitácora de auditoría</text>
+  <rect x="484" y="264" width="264" height="38" fill="#dcece7" stroke="#b9d3cb"/>
+  <text x="500" y="288" font-size="11" font-weight="700" fill="#145b52">Archivos TEF y extractos</text>
+  <rect x="748" y="264" width="260" height="38" fill="#f7f9f8" stroke="#d6dfdc"/>
+  <text x="766" y="288" font-size="11" fill="#536763">Actualizaciones de CBU</text>
+  <text x="484" y="330" font-size="10" font-weight="700" fill="#657875">DESDE</text>
+  <rect x="484" y="338" width="132" height="32" rx="2" fill="#ffffff" stroke="#cbd5d1"/><text x="496" y="359" font-size="11" fill="#334845">01/10/2026</text>
+  <text x="630" y="330" font-size="10" font-weight="700" fill="#657875">HASTA</text>
+  <rect x="630" y="338" width="132" height="32" rx="2" fill="#ffffff" stroke="#cbd5d1"/><text x="642" y="359" font-size="11" fill="#334845">13/10/2026</text>
+  <text x="778" y="330" font-size="10" font-weight="700" fill="#657875">TIPO</text>
+  <rect x="778" y="338" width="142" height="32" rx="2" fill="#ffffff" stroke="#cbd5d1"/><text x="790" y="359" font-size="11" fill="#334845">Todos  ▾</text>
+  <text x="936" y="330" font-size="10" font-weight="700" fill="#657875">RESULTADO</text>
+  <rect x="936" y="338" width="142" height="32" rx="2" fill="#ffffff" stroke="#cbd5d1"/><text x="948" y="359" font-size="11" fill="#334845">Todos  ▾</text>
+  <rect x="484" y="388" width="800" height="36" fill="#e8efed" stroke="#cbd5d1"/>
+  <g font-size="9" font-weight="700" fill="#435a55"><text x="496" y="411">FECHA / HORA</text><text x="610" y="411">USUARIO</text><text x="710" y="411">TIPO</text><text x="816" y="411">RESULTADO</text><text x="924" y="411">NOTIFICADO</text><text x="1040" y="411">DETALLE</text></g>
+  <g font-size="10" fill="#263b37">
+    <rect x="484" y="424" width="800" height="42" fill="#ffffff" stroke="#e0e6e4"/><text x="496" y="450">13/10 09:12</text><text x="610" y="450">jperez</text><text x="710" y="450">TEF</text><text x="816" y="450" fill="#287267">Éxito</text><text x="924" y="450">Sí</text><text x="1040" y="450">Ver más</text>
+    <rect x="484" y="466" width="800" height="42" fill="#fffaf8" stroke="#ead9d3"/><text x="496" y="492">13/10 10:05</text><text x="610" y="492">agarcia</text><text x="710" y="492">Extracto</text><text x="816" y="492" fill="#a34732">Error</text><text x="924" y="492">No</text><text x="1040" y="492">Ver más</text>
   </g>
-
-  <g>
-    <rect x="620" y="112" width="640" height="260" fill="#f8fafc" stroke="#d1d5db"/>
-    <rect x="648" y="138" width="200" height="60" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="670" y="168" font-size="11" fill="#64748b">Módulos activos</text>
-    <text x="670" y="188" font-size="28" font-weight="700" fill="#111827">3</text>
-
-    <rect x="888" y="138" width="200" height="60" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="910" y="168" font-size="11" fill="#64748b">Eventos hoy</text>
-    <text x="910" y="188" font-size="28" font-weight="700" fill="#111827">1.482</text>
-
-    <rect x="648" y="230" width="420" height="88" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="664" y="258" font-size="12" fill="#111827">Aviso de seguridad: la bitácora informa transacciones en tiempo</text>
-    <text x="664" y="276" font-size="12" fill="#111827">real y se registran accesos en tiempo real para auditoría.</text>
-  </g>
-
-  <g>
-    <rect x="52" y="432" width="1236" height="210" fill="#f8fafc" stroke="#d1d5db"/>
-    <rect x="76" y="456" width="220" height="24" fill="#f3f4f6" stroke="#d1d5db"/>
-    <text x="94" y="472" font-size="12" fill="#374151">Bitácora</text>
-    <rect x="990" y="456" width="220" height="30" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="1010" y="476" font-size="11" fill="#374151">TEF / 34</text>
-
-    <rect x="78" y="500" width="1120" height="44" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="94" y="528" font-size="11" fill="#475569">Fecha</text>
-    <text x="220" y="528" font-size="11" fill="#475569">Usuario</text>
-    <text x="390" y="528" font-size="11" fill="#475569">Tipo</text>
-    <text x="530" y="528" font-size="11" fill="#475569">Resultado</text>
-    <text x="780" y="528" font-size="11" fill="#475569">Detalle</text>
-
-    <rect x="78" y="546" width="1120" height="32" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="94" y="567" font-size="11" fill="#374151">2026-10-05</text>
-    <text x="220" y="567" font-size="11" fill="#374151">admin_tec</text>
-    <text x="390" y="567" font-size="11" fill="#374151">TEF</text>
-    <text x="530" y="567" font-size="11" fill="#22c55e">OK</text>
-    <text x="780" y="567" font-size="11" fill="#374151">Generación del archivo completada</text>
-
-    <rect x="78" y="580" width="1120" height="32" fill="#ffffff" stroke="#d1d5db"/>
-    <text x="94" y="601" font-size="11" fill="#374151">2026-10-05</text>
-    <text x="220" y="601" font-size="11" fill="#374151">analista_01</text>
-    <text x="390" y="601" font-size="11" fill="#374151">Actualización CBU</text>
-    <text x="530" y="601" font-size="11" fill="#f59e0b">Warning</text>
-    <text x="780" y="601" font-size="11" fill="#374151">3 registros revisados manualmente</text>
-  </g>
-
-  <rect x="52" y="670" width="1240" height="42" fill="#f8fafc" stroke="#d1d5db"/>
-  <text x="74" y="696" font-size="12" fill="#475569">© 2026 Portal Financiero</text>
+  <rect x="484" y="536" width="800" height="1" fill="#d6dfdc"/>
+  <text x="484" y="562" font-size="10" font-weight="700" fill="#58716c">COLUMNAS DE LA PESTAÑA “ACTUALIZACIONES DE CBU”</text>
+  <rect x="484" y="578" width="800" height="36" fill="#f3f7f5" stroke="#d6dfdc"/>
+  <g font-size="9" font-weight="700" fill="#435a55"><text x="496" y="601">FECHA / HORA</text><text x="630" y="601">USUARIO</text><text x="738" y="601">SOCIO (CUIT)</text><text x="876" y="601">ESTADO</text><text x="976" y="601">MENSAJE TÉCNICO</text></g>
+  <rect x="484" y="614" width="800" height="40" fill="#ffffff" stroke="#e0e6e4"/>
+  <g font-size="10" fill="#263b37"><text x="496" y="639">13/10 11:40</text><text x="630" y="639">jperez</text><text x="738" y="639">20304050607</text><text x="876" y="639" fill="#287267">Success</text><text x="976" y="639">—</text></g>
+  <text x="484" y="704" font-size="10" fill="#657875">Las operaciones TEF/extractos y las actualizaciones de CBU se consultan en vistas separadas.</text>
 </svg>
