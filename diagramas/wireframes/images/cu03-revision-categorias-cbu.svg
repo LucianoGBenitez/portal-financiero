@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#fff}.tab{fill:#fff;stroke:#dcdcdc}.tab-head{fill:#efefef;stroke:#e0e0e0}.kpi-label{font-size:11px;fill:#666}.kpi-value{font-size:16px;font-weight:700;fill:#111}.muted{fill:#777;font-size:12px}.btn-primary{fill:#222}.btn-primary-text{fill:#fff;font-weight:700;font-size:13px}.warn{fill:#c0392b}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1365" height="768"/>
+
+  <g transform="translate(32,24)'><text x="0" y="0" font-size="20" font-weight="700" fill="#222">Revisión de categorías del cruce de CBU</text><text x="0" y="26" font-size="12" fill="#666">Actualización de maestros de proveedores</text></g>
+
+  <!-- Tabs -->
+  <g transform="translate(32,80)">
+    <rect x="0" y="0" width="1260" height="40" class="tab-head"/>
+    <g fill="#333" font-size="13">
+      <rect x="8" y="6" width="200" height="28" rx="4" fill="#222"/><text x="24" y="26" fill="#fff">Actualización inmediata</text>
+      <rect x="220" y="6" width="200" height="28" rx="4" fill="#fff" stroke="#d1d1d1"/><text x="236" y="26">Sugerencias por nombre</text>
+      <rect x="432" y="6" width="160" height="28" rx="4" fill="#fff" stroke="#d1d1d1"/><text x="448" y="26">Registros únicos</text>
+      <rect x="604" y="6" width="120" height="28" rx="4" fill="#fff" stroke="#d1d1d1"/><text x="620" y="26">Excluidos</text>
+    </g>
+  </g>
+
+  <!-- KPI cards -->
+  <g transform="translate(32,140)">
+    <g transform="translate(0,0)"><rect class="tab" x="0" y="0" width="300" height="56" rx="6"/><text class="kpi-label" x="14" y="22">Coincidencias exactas</text><text class="kpi-value" x="14" y="44">178</text></g>
+    <g transform="translate(320,0)"><rect class="tab" x="0" y="0" width="300" height="56" rx="6"/><text class="kpi-label" x="14" y="22">Sugerencias</text><text class="kpi-value" x="14" y="44">42</text></g>
+    <g transform="translate(640,0)"><rect class="tab" x="0" y="0" width="300" height="56" rx="6"/><text class="kpi-label" x="14" y="22">Sin coincidencia</text><text class="kpi-value" x="14" y="44">26</text></g>
+    <g transform="translate(960,0)"><rect class="tab" x="0" y="0" width="320" height="56" rx="6"/><text class="kpi-label" x="14" y="22">Excluidos</text><text class="kpi-value" x="14" y="44">11</text></g>
+  </g>
+
+  <!-- Table (Actualización inmediata) -->
+  <g transform="translate(32,220)">
+    <rect x="0" y="0" width="1260" height="36" class="tab-head"/>
+    <g font-size="13" fill="#333"><text x="12" y="24">Sel</text><text x="72" y="24">CUIT</text><text x="300" y="24">Nombre (SAP)</text><text x="620" y="24">Nombre (padrón)</text><text x="960" y="24">CBU actual</text><text x="1160" y="24">CBU sugerido</text></g>
+
+    <g transform="translate(0,44)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="72" y="26">20304050607</text><text x="300" y="26">ACME SA</text><text x="620" y="26">ACME S.A.</text><text x="960" y="26">0070999030004…</text><text x="1160" y="26">0170999030009…</text></g>
+
+    <g transform="translate(0,96)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="72" y="26">20304050608</text><text x="300" y="26">LOPEZ SRL</text><text x="620" y="26">López S.R.L.</text><text x="960" y="26">0110999030001…</text><text x="1160" y="26">0110999030099…</text></g>
+
+    <g transform="translate(0,148)'" fill="#999" font-size="12"><text x="12" y="20">...</text></g>
+  </g>
+
+  <!-- Footer actions -->
+  <g transform="translate(32,520)">
+    <rect x="0" y="0" width="760" height="36" rx="6" fill="#fff" stroke="#e6e6e6"/><text x="12" y="24" class="muted">Confirmar actualización actúa sólo sobre filas seleccionadas. Atomicidad: todo o nada.</text>
+    <g transform="translate(0,48)'><rect class="btn-secondary" x="0" y="10" width="160" height="36" rx="6" fill="#fff" stroke="#bdbdbd"/><text x="24" y="34" class="muted">Volver</text><rect class="btn-primary" x="220" y="10" width="220" height="36" rx="6" fill="#222"/><text class="btn-primary-text" x="280" y="34">Confirmar actualización</text></g>
+  </g>
+</svg>
