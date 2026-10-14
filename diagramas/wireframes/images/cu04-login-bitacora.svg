@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#fff}.panel{fill:#f6f6f6;stroke:#dcdcdc}.header{font-size:20px;font-weight:700;fill:#222}.muted{fill:#777;font-size:12}.card{fill:#fff;stroke:#dcdcdc}
+      .btn-primary{fill:#222}.btn-primary-text{fill:#fff;font-weight:700;font-size:13}.table-head{fill:#efefef;stroke:#e0e0e0}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1365" height="768"/>
+
+  <g transform="translate(32,24)"><text class="header" x="0" y="0">Portal Financiero</text><text class="muted" x="0" y="26">Acceso corporativo</text></g>
+
+  <!-- Login panel -->
+  <g transform="translate(32,80)">
+    <rect class="panel" x="0" y="0" width="420" height="220" rx="8"/><text x="24" y="32" font-size="16" font-weight="700" fill="#222">Iniciar sesión</text>
+    <rect x="24" y="56" width="372" height="36" rx="6" class="card"/><text x="34" y="80" class="muted">Usuario</text>
+    <rect x="24" y="104" width="372" height="36" rx="6" class="card"/><text x="34" y="128" class="muted">Contraseña</text>
+    <rect class="btn-primary" x="24" y="148" width="120" height="36" rx="6"/><text class="btn-primary-text" x="52" y="172">Ingresar</text>
+    <text x="24" y="196" class="muted">Mensaje de error genérico: "Credenciales inválidas"</text>
+  </g>
+
+  <!-- Bitácora panel -->
+  <g transform="translate(480,80)">
+    <text x="0" y="0" font-size="16" font-weight="700" fill="#222">Bitácora</text>
+    <!-- Tabs -->
+    <g transform="translate(0,12)"><rect x="0" y="18" width="220" height="34" rx="6" fill="#efefef"/><text x="12" y="40" class="muted">TEF / Extracto</text><rect x="230" y="18" width="220" height="34" rx="6" fill="#fff" stroke="#d1d1d1"/><text x="244" y="40" class="muted">Actualización CBU</text></g>
+
+    <!-- Filters -->
+    <g transform="translate(0,64)"><rect x="0" y="0" width="580" height="36" rx="6" class="card"/><text x="12" y="24" class="muted">Desde  |  Hasta  |  Tipo  |  Resultado  |  [Consultar]</text></g>
+
+    <!-- Table -->
+    <g transform="translate(0,116)">
+      <rect class="table-head" x="0" y="0" width="980" height="36" rx="2"/><g font-size="13" fill="#333"><text x="12" y="24">Fecha</text><text x="160" y="24">Usuario</text><text x="320" y="24">Tipo</text><text x="520" y="24">Resultado</text><text x="680" y="24">Detalle</text></g>
+
+      <g transform="translate(0,44)'><rect x="0" y="0" width="980" height="36" fill="#fff" stroke="#eee"/><text x="12" y="24">2026-10-05</text><text x="160" y="24">admin_tec</text><text x="320" y="24">TEF</text><text x="520" y="24">OK</text><text x="680" y="24">Generación del archivo completada</text></g>
+      <g transform="translate(0,92)'><rect x="0" y="0" width="980" height="36" fill="#fff" stroke="#eee"/><text x="12" y="24">2026-10-05</text><text x="160" y="24">analista_01</text><text x="320" y="24">Actualización CBU</text><text x="520" y="24">Warning</text><text x="680" y="24">3 registros revisados manualmente</text></g>
+      <g transform="translate(0,140)" fill="#999" font-size="12"><text x="12" y="20">...</text></g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#fff}.card{fill:#fff;stroke:#dcdcdc;stroke-width:1}.header{font-size:20px;font-weight:700;fill:#222}.subtitle{font-size:12px;fill:#666}.kpi-label{font-size:11px;fill:#666}.kpi-value{font-size:16px;font-weight:700;fill:#111}.table-head{fill:#efefef;stroke:#e0e0e0}.btn-primary{fill:#222;stroke:#222}.btn-primary-text{fill:#fff;font-weight:700;font-size:13px}.btn-secondary{fill:#fff;stroke:#bdbdbd}.muted{fill:#777;font-size:12px}.warn{fill:#c0392b}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1365" height="768"/>
+
+  <g transform="translate(32,24)">
+    <text class="header" x="0" y="0">Previsualización y confirmación de movimientos bancarios</text>
+    <text class="subtitle" x="0" y="26">Paso 2 de 3</text>
+  </g>
+
+  <!-- KPIs -->
+  <g transform="translate(32,80)">
+    <g transform="translate(0,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Movimientos cargados</text><text class="kpi-value" x="14" y="44">240</text></g>
+    <g transform="translate(320,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Confirmados</text><text class="kpi-value" x="14" y="44">198</text></g>
+    <g transform="translate(640,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Posibles duplicados</text><text class="kpi-value" x="14" y="44">12</text></g>
+    <g transform="translate(960,0)"><rect class="card" x="0" y="0" width="320" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Importe total</text><text class="kpi-value" x="14" y="44">$ 18.540.000</text></g>
+  </g>
+
+  <!-- Controls -->
+  <g transform="translate(32,160)">
+    <g transform="translate(0,0)"><rect width="260" height="36" rx="6" class="card"/><text x="12" y="22" class="muted">☑️  Solo posibles duplicados</text></g>
+    <g transform="translate(300,0)"><rect width="160" height="36" rx="6" class="card"/><text x="14" y="22" class="muted">Seleccionar todos</text></g>
+    <g transform="translate(480,0)"><rect width="120" height="36" rx="6" class="card"/><text x="14" y="22" class="muted">Ninguno</text></g>
+  </g>
+
+  <!-- Table -->
+  <g transform="translate(32,220)">
+    <rect class="table-head" x="0" y="0" width="1260" height="36" rx="2"/>
+    <g font-size="13" fill="#333"><text x="12" y="24">Sel</text><text x="60" y="24">Fecha</text><text x="180" y="24">Banco</text><text x="320" y="24">Cuenta</text><text x="520" y="24">Importe</text><text x="640" y="24">Concepto</text><text x="980" y="24">Estado</text></g>
+
+    <g transform="translate(0,44)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="60" y="26">2026-10-05</text><text x="180" y="26">BNA</text><text x="320" y="26">0001-4920/1</text><text x="520" y="26">$120.000</text><text x="640" y="26">Pago proveedor</text><text x="980" y="26">Normal</text></g>
+
+    <g transform="translate(0,96)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#f2dede"/><text x="12" y="26">[ ]</text><text x="60" y="26">2026-10-05</text><text x="180" y="26">Macro</text><text x="320" y="26">0002-8812/4</text><text x="520" y="26">$85.000</text><text x="640" y="26">Pago proveedor suministros</text><text x="980" y="26" class="warn">Posible duplicado</text></g>
+
+    <g transform="translate(0,148)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="60" y="26">2026-10-06</text><text x="180" y="26">Santander</text><text x="320" y="26">0003-1109/8</text><text x="520" y="26">$34.500</text><text x="640" y="26">Interfaz contable cobranzas</text><text x="980" y="26">Normal</text></g>
+
+    <g transform="translate(0,200)" fill="#999" font-size="12"><text x="12" y="20">...</text></g>
+  </g>
+
+  <!-- Banner + actions -->
+  <g transform="translate(32,520)">
+    <rect x="0" y="0" width="1260" height="48" rx="6" fill="#f0f8ff" stroke="#d0e6ff"/><text x="12" y="30" fill="#1f6feb">Se confirmaron 3 movimientos para envío a SAP</text>
+    <g transform="translate(0,72)"><rect class="btn-secondary" x="0" y="10" width="160" height="36" rx="6"/><text class="btn-secondary-text" x="24" y="34">Volver</text><rect class="btn-primary" x="220" y="10" width="200" height="36" rx="6"/><text class="btn-primary-text" x="280" y="34">Confirmar envío a SAP</text></g>
+  </g>
+</svg>
