@@ -41,6 +41,7 @@ Visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/).
 - `id_lote` (PK): identificador del lote/planilla cargada.
 - `id_usuario_carga` (FK → `Usuario`): quién cargó la planilla.
 - `nombre_archivo_original`: nombre del archivo `.xls`/`.xlsx`/`.csv` subido (RF-01).
+- `hash_archivo`: huella (ej. SHA-256) del contenido del archivo cargado; permite reconocer si la misma planilla ya fue cargada antes (ver Decisión 6).
 - `fecha_carga`: marca temporal de la carga.
 - `estado_general`: resultado global del lote (procesado / con errores).
 
@@ -77,6 +78,7 @@ Visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/).
 - `fecha_movimiento`, `importe`, `tipo` (débito/crédito): datos del movimiento bancario.
 - `estado`: descargado / confirmado / impactado / rechazado (RF-07, RF-08).
 - `fecha_impacto_sap`: marca temporal del impacto en SAP, nula hasta que se confirma.
+- `numero_asiento_sap`: número de asiento contable devuelto por el Service Layer de SAP al impactar el movimiento; nulo hasta que se confirma (ver Decisión 7).
 
 ### `SocioNegocio`
 
@@ -124,3 +126,11 @@ RF-09 exige poder interrumpir "el proceso de sincronización" ante una pérdida 
 ### Decisión 5 — `numero_operacion_bancaria` en `MovimientoBancario` para detectar duplicados
 
 Al diseñar la pantalla de previsualización de movimientos (CU-02) se detectó que el modelo no tenía forma de marcar un movimiento como "posible duplicado" frente a una sincronización anterior, algo que también había señalado el docente: sin un identificador propio del movimiento bancario, dos sincronizaciones que descargan el mismo movimiento se ven como dos registros distintos e indistinguibles. Se agregó `numero_operacion_bancaria`, el identificador que asigna el propio banco a cada movimiento, para poder comparar contra los movimientos ya guardados de la misma cuenta antes de ofrecerlo para confirmación. No se modeló como una restricción `UNIQUE` a nivel de base de datos porque esa unicidad depende de la cuenta bancaria, y `CuentaBancaria` se alcanza solo indirectamente a través de `SincronizacionExtracto`; la comparación de duplicados queda a cargo de la aplicación al armar la previsualización, no de una constraint del motor.
+
+### Decisión 6 — `hash_archivo` en `LotePago` para reconocer una planilla ya cargada
+
+La Historia 7 del slicing ("Evitar generar dos veces el mismo lote") y la respuesta de la Parte B sobre reintentos tras un corte de sesión exigen que el sistema pueda advertir si la misma planilla ya fue procesada. Se evaluó comparar el contenido fila por fila contra lotes anteriores, pero se descartó por ser costoso y ambiguo (un mismo conjunto de pagos reordenado se vería como un archivo distinto). Se optó por calcular un hash (ej. SHA-256) del archivo completo al momento de la carga y guardarlo en `LotePago`: comparar hashes es una operación barata y exacta, y alcanza para la advertencia que pide la Historia 7 sin necesitar analizar el contenido.
+
+### Decisión 7 — `numero_asiento_sap` en `MovimientoBancario` para trazabilidad del impacto contable
+
+La Historia 2.3 del slicing ya daba por sentado que "el sistema guarda el número de asiento generado por SAP devuelto por la API/Service Layer", pero ese campo no existía en el modelo: era una inconsistencia entre el slicing y el ER, también señalada por el docente. Se agregó `numero_asiento_sap` junto a `fecha_impacto_sap`, ambos nulos hasta que el movimiento se confirma e impacta, para poder responder —ante una auditoría o un reclamo de un proveedor— con qué asiento contable de SAP se corresponde cada movimiento bancario.

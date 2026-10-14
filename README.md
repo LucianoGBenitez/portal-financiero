@@ -1,4 +1,4 @@
-# [Nombre del Sistema] — Grupo [N]
+# Portal Financiero — Grupo X
 
 > Materia: Diseño de Sistemas Web — Analista Funcional de Sistemas  
 > Institución: Terciario Urquiza — Rosario  
@@ -11,11 +11,21 @@ Ver [integrantes.md](integrantes.md)
 
 ## Descripción del proyecto
 
-_Breve descripción del sistema que el grupo está analizando y documentando._
+El Portal Financiero es una plataforma web corporativa para centralizar, automatizar y
+auditar las operaciones del departamento de tesorería y contabilidad de un Holding. Conecta
+el canal bancario (Interbanking) con el ERP corporativo (SAP Business One), cubriendo cuatro
+módulos: generación de transferencias masivas (archivo TEF), sincronización de extractos
+bancarios con impacto contable automático, sincronización de datos maestros de CBU contra el
+maestro de socios de negocio de SAP, y seguridad/auditoría de todas las operaciones.
 
 ## Caso de estudio
 
-_Nombre del organismo o empresa comitente y contexto del problema que el sistema resuelve._
+El comitente es el departamento de tesorería y contabilidad de un Holding que hoy opera con
+una desconexión manual entre Interbanking y SAP Business One: los pagos masivos y la
+conciliación de extractos se transcriben a mano entre ambos sistemas, lo que genera errores
+de carga, demoras en la conciliación diaria y riesgo de duplicar pagos o asientos contables.
+El Portal Financiero busca unificar y validar esas operaciones antes de que lleguen al banco
+o se impacten en el ERP.
 
 ## Entregas
 
