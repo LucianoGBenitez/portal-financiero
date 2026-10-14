@@ -1,40 +1,74 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
-  <defs>
-    <style>
-      .bg{fill:#fff}.panel{fill:#f6f6f6;stroke:#dcdcdc}.header{font-size:20px;font-weight:700;fill:#222}.muted{fill:#777;font-size:12}.card{fill:#fff;stroke:#dcdcdc}
-      .btn-primary{fill:#222}.btn-primary-text{fill:#fff;font-weight:700;font-size:13}.table-head{fill:#efefef;stroke:#e0e0e0}
-    </style>
-  </defs>
+  <rect width="1365" height="768" fill="#f3f4f6"/>
+  <rect x="20" y="20" width="1325" height="728" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
 
-  <rect class="bg" x="0" y="0" width="1365" height="768"/>
+  <text x="50" y="58" font-size="18" font-weight="700" fill="#111827">Sistema Portal Financiero</text>
+  <text x="420" y="58" font-size="12" fill="#64748b">Módulo de seguridad, acceso &amp; auditoría</text>
+  <rect x="980" y="30" width="280" height="34" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="1000" y="52" font-size="11" fill="#475569">Ambiente: Producción</text>
+  <rect x="1126" y="30" width="200" height="34" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="1144" y="52" font-size="11" fill="#475569">Sesión: no autenticada</text>
 
-  <g transform="translate(32,24)"><text class="header" x="0" y="0">Portal Financiero</text><text class="muted" x="0" y="26">Acceso corporativo</text></g>
+  <g>
+    <rect x="52" y="112" width="520" height="260" fill="#f8fafc" stroke="#d1d5db"/>
+    <text x="70" y="140" font-size="12" fill="#64748b">ACCESO / AUDITORÍA PÚBLICA</text>
+    <text x="70" y="186" font-size="30" font-weight="700" fill="#111827">Portal Financiero</text>
+    <text x="70" y="212" font-size="12" fill="#64748b">Acceso corporativo · Ingrese credenciales de red o consulte</text>
+    <text x="70" y="228" font-size="12" fill="#64748b">la bitácora pública de ejecuciones.</text>
 
-  <!-- Login panel -->
-  <g transform="translate(32,80)">
-    <rect class="panel" x="0" y="0" width="420" height="220" rx="8"/><text x="24" y="32" font-size="16" font-weight="700" fill="#222">Iniciar sesión</text>
-    <rect x="24" y="56" width="372" height="36" rx="6" class="card"/><text x="34" y="80" class="muted">Usuario</text>
-    <rect x="24" y="104" width="372" height="36" rx="6" class="card"/><text x="34" y="128" class="muted">Contraseña</text>
-    <rect class="btn-primary" x="24" y="148" width="120" height="36" rx="6"/><text class="btn-primary-text" x="52" y="172">Ingresar</text>
-    <text x="24" y="196" class="muted">Mensaje de error genérico: "Credenciales inválidas"</text>
+    <rect x="70" y="250" width="240" height="36" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="86" y="273" font-size="12" fill="#64748b">Usuario</text>
+    <rect x="70" y="298" width="240" height="36" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="86" y="321" font-size="12" fill="#64748b">Contraseña</text>
+
+    <rect x="70" y="352" width="200" height="36" fill="#111827"/>
+    <text x="116" y="375" font-size="13" fill="#ffffff" font-weight="700">Ingresar</text>
   </g>
 
-  <!-- Bitácora panel -->
-  <g transform="translate(480,80)">
-    <text x="0" y="0" font-size="16" font-weight="700" fill="#222">Bitácora</text>
-    <!-- Tabs -->
-    <g transform="translate(0,12)"><rect x="0" y="18" width="220" height="34" rx="6" fill="#efefef"/><text x="12" y="40" class="muted">TEF / Extracto</text><rect x="230" y="18" width="220" height="34" rx="6" fill="#fff" stroke="#d1d1d1"/><text x="244" y="40" class="muted">Actualización CBU</text></g>
+  <g>
+    <rect x="620" y="112" width="640" height="260" fill="#f8fafc" stroke="#d1d5db"/>
+    <rect x="648" y="138" width="200" height="60" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="670" y="168" font-size="11" fill="#64748b">Módulos activos</text>
+    <text x="670" y="188" font-size="28" font-weight="700" fill="#111827">3</text>
 
-    <!-- Filters -->
-    <g transform="translate(0,64)"><rect x="0" y="0" width="580" height="36" rx="6" class="card"/><text x="12" y="24" class="muted">Desde  |  Hasta  |  Tipo  |  Resultado  |  [Consultar]</text></g>
+    <rect x="888" y="138" width="200" height="60" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="910" y="168" font-size="11" fill="#64748b">Eventos hoy</text>
+    <text x="910" y="188" font-size="28" font-weight="700" fill="#111827">1.482</text>
 
-    <!-- Table -->
-    <g transform="translate(0,116)">
-      <rect class="table-head" x="0" y="0" width="980" height="36" rx="2"/><g font-size="13" fill="#333"><text x="12" y="24">Fecha</text><text x="160" y="24">Usuario</text><text x="320" y="24">Tipo</text><text x="520" y="24">Resultado</text><text x="680" y="24">Detalle</text></g>
-
-      <g transform="translate(0,44)'><rect x="0" y="0" width="980" height="36" fill="#fff" stroke="#eee"/><text x="12" y="24">2026-10-05</text><text x="160" y="24">admin_tec</text><text x="320" y="24">TEF</text><text x="520" y="24">OK</text><text x="680" y="24">Generación del archivo completada</text></g>
-      <g transform="translate(0,92)'><rect x="0" y="0" width="980" height="36" fill="#fff" stroke="#eee"/><text x="12" y="24">2026-10-05</text><text x="160" y="24">analista_01</text><text x="320" y="24">Actualización CBU</text><text x="520" y="24">Warning</text><text x="680" y="24">3 registros revisados manualmente</text></g>
-      <g transform="translate(0,140)" fill="#999" font-size="12"><text x="12" y="20">...</text></g>
-    </g>
+    <rect x="648" y="230" width="420" height="88" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="664" y="258" font-size="12" fill="#111827">Aviso de seguridad: la bitácora informa transacciones en tiempo</text>
+    <text x="664" y="276" font-size="12" fill="#111827">real y se registran accesos en tiempo real para auditoría.</text>
   </g>
+
+  <g>
+    <rect x="52" y="432" width="1236" height="210" fill="#f8fafc" stroke="#d1d5db"/>
+    <rect x="76" y="456" width="220" height="24" fill="#f3f4f6" stroke="#d1d5db"/>
+    <text x="94" y="472" font-size="12" fill="#374151">Bitácora</text>
+    <rect x="990" y="456" width="220" height="30" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="1010" y="476" font-size="11" fill="#374151">TEF / 34</text>
+
+    <rect x="78" y="500" width="1120" height="44" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="94" y="528" font-size="11" fill="#475569">Fecha</text>
+    <text x="220" y="528" font-size="11" fill="#475569">Usuario</text>
+    <text x="390" y="528" font-size="11" fill="#475569">Tipo</text>
+    <text x="530" y="528" font-size="11" fill="#475569">Resultado</text>
+    <text x="780" y="528" font-size="11" fill="#475569">Detalle</text>
+
+    <rect x="78" y="546" width="1120" height="32" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="94" y="567" font-size="11" fill="#374151">2026-10-05</text>
+    <text x="220" y="567" font-size="11" fill="#374151">admin_tec</text>
+    <text x="390" y="567" font-size="11" fill="#374151">TEF</text>
+    <text x="530" y="567" font-size="11" fill="#22c55e">OK</text>
+    <text x="780" y="567" font-size="11" fill="#374151">Generación del archivo completada</text>
+
+    <rect x="78" y="580" width="1120" height="32" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="94" y="601" font-size="11" fill="#374151">2026-10-05</text>
+    <text x="220" y="601" font-size="11" fill="#374151">analista_01</text>
+    <text x="390" y="601" font-size="11" fill="#374151">Actualización CBU</text>
+    <text x="530" y="601" font-size="11" fill="#f59e0b">Warning</text>
+    <text x="780" y="601" font-size="11" fill="#374151">3 registros revisados manualmente</text>
+  </g>
+
+  <rect x="52" y="670" width="1240" height="42" fill="#f8fafc" stroke="#d1d5db"/>
+  <text x="74" y="696" font-size="12" fill="#475569">© 2026 Portal Financiero</text>
 </svg>

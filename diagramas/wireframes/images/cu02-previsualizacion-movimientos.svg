@@ -1,49 +1,99 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1365" height="768" viewBox="0 0 1365 768" font-family="Arial, Helvetica, sans-serif">
-  <defs>
-    <style>
-      .bg{fill:#fff}.card{fill:#fff;stroke:#dcdcdc;stroke-width:1}.header{font-size:20px;font-weight:700;fill:#222}.subtitle{font-size:12px;fill:#666}.kpi-label{font-size:11px;fill:#666}.kpi-value{font-size:16px;font-weight:700;fill:#111}.table-head{fill:#efefef;stroke:#e0e0e0}.btn-primary{fill:#222;stroke:#222}.btn-primary-text{fill:#fff;font-weight:700;font-size:13px}.btn-secondary{fill:#fff;stroke:#bdbdbd}.muted{fill:#777;font-size:12px}.warn{fill:#c0392b}
-    </style>
-  </defs>
+  <rect width="1365" height="768" fill="#f3f4f6"/>
+  <rect x="18" y="18" width="1329" height="732" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
 
-  <rect class="bg" x="0" y="0" width="1365" height="768"/>
+  <text x="52" y="58" font-size="18" font-weight="700" fill="#111827">Sistema Portal Financiero</text>
+  <text x="420" y="58" font-size="12" fill="#64748b">Módulo de conciliación &amp; movimientos</text>
+  <rect x="960" y="32" width="300" height="32" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="980" y="52" font-size="11" fill="#475569">Ambiente: Producción</text>
+  <rect x="1108" y="32" width="220" height="32" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="1128" y="52" font-size="11" fill="#475569">Usuario: operador_finanzas_01</text>
 
-  <g transform="translate(32,24)">
-    <text class="header" x="0" y="0">Previsualización y confirmación de movimientos bancarios</text>
-    <text class="subtitle" x="0" y="26">Paso 2 de 3</text>
+  <text x="52" y="105" font-size="12" fill="#64748b">PASO 2 DE 3</text>
+  <text x="52" y="156" font-size="40" font-weight="700" fill="#111827">Previsualización y confirmación</text>
+  <text x="52" y="196" font-size="40" font-weight="700" fill="#111827">de movimientos bancarios</text>
+  <text x="52" y="224" font-size="12" fill="#64748b">Revisa los movimientos conciliados y filtra posibles duplicados antes</text>
+  <text x="52" y="240" font-size="12" fill="#64748b">de confirmar el despacho a SAP.</text>
+
+  <g>
+    <rect x="52" y="268" width="300" height="72" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="74" y="294" font-size="11" fill="#64748b">MOVIMIENTOS CARGADOS</text>
+    <text x="74" y="324" font-size="28" font-weight="700" fill="#111827">240</text>
+
+    <rect x="378" y="268" width="300" height="72" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="400" y="294" font-size="11" fill="#64748b">CONFIRMADOS</text>
+    <text x="400" y="324" font-size="28" font-weight="700" fill="#111827">198</text>
+
+    <rect x="704" y="268" width="300" height="72" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="726" y="294" font-size="11" fill="#64748b">POSIBLES DUPLICADOS</text>
+    <text x="726" y="324" font-size="28" font-weight="700" fill="#111827">12</text>
+
+    <rect x="1030" y="268" width="270" height="72" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="1052" y="294" font-size="11" fill="#64748b">IMPORTE TOTAL</text>
+    <text x="1052" y="324" font-size="28" font-weight="700" fill="#111827">$ 18.540.000</text>
   </g>
 
-  <!-- KPIs -->
-  <g transform="translate(32,80)">
-    <g transform="translate(0,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Movimientos cargados</text><text class="kpi-value" x="14" y="44">240</text></g>
-    <g transform="translate(320,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Confirmados</text><text class="kpi-value" x="14" y="44">198</text></g>
-    <g transform="translate(640,0)"><rect class="card" x="0" y="0" width="300" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Posibles duplicados</text><text class="kpi-value" x="14" y="44">12</text></g>
-    <g transform="translate(960,0)"><rect class="card" x="0" y="0" width="320" height="60" rx="6"/><text class="kpi-label" x="14" y="20">Importe total</text><text class="kpi-value" x="14" y="44">$ 18.540.000</text></g>
+  <g>
+    <rect x="52" y="372" width="260" height="36" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="74" y="395" font-size="12" fill="#374151">☐ Solo posibles duplicados</text>
+
+    <rect x="340" y="372" width="150" height="36" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="364" y="395" font-size="12" fill="#374151">Seleccionar todos</text>
+
+    <rect x="510" y="372" width="120" height="36" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="534" y="395" font-size="12" fill="#374151">Ninguno</text>
+
+    <rect x="940" y="372" width="208" height="36" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="960" y="395" font-size="12" fill="#64748b">Buscar por banco, cuenta o concepto...</text>
+
+    <rect x="1168" y="372" width="120" height="36" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="1202" y="395" font-size="12" fill="#374151">Filtrar</text>
   </g>
 
-  <!-- Controls -->
-  <g transform="translate(32,160)">
-    <g transform="translate(0,0)"><rect width="260" height="36" rx="6" class="card"/><text x="12" y="22" class="muted">☑️  Solo posibles duplicados</text></g>
-    <g transform="translate(300,0)"><rect width="160" height="36" rx="6" class="card"/><text x="14" y="22" class="muted">Seleccionar todos</text></g>
-    <g transform="translate(480,0)"><rect width="120" height="36" rx="6" class="card"/><text x="14" y="22" class="muted">Ninguno</text></g>
+  <g>
+    <rect x="52" y="430" width="1236" height="150" fill="#ffffff" stroke="#d1d5db"/>
+    <rect x="52" y="430" width="1236" height="28" fill="#f3f4f6" stroke="#d1d5db"/>
+    <text x="70" y="448" font-size="11" fill="#374151">FECHA</text>
+    <text x="190" y="448" font-size="11" fill="#374151">BANCO</text>
+    <text x="310" y="448" font-size="11" fill="#374151">CUENTA</text>
+    <text x="440" y="448" font-size="11" fill="#374151">IMPORTE</text>
+    <text x="620" y="448" font-size="11" fill="#374151">CONCEPTO</text>
+    <text x="980" y="448" font-size="11" fill="#374151">ESTADO</text>
+
+    <rect x="52" y="458" width="1236" height="52" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="70" y="490" font-size="12" fill="#374151">2026-10-05</text>
+    <text x="190" y="490" font-size="12" fill="#374151">BNA</text>
+    <text x="310" y="490" font-size="12" fill="#374151">0001-4920/1</text>
+    <text x="440" y="490" font-size="12" fill="#374151">$ 120.000</text>
+    <text x="620" y="490" font-size="12" fill="#374151">Pago proveedor servicios</text>
+    <rect x="980" y="470" width="120" height="24" fill="#ffffff" stroke="#999"/>
+    <text x="1010" y="487" font-size="11" fill="#374151">Normal</text>
+
+    <rect x="52" y="510" width="1236" height="52" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="70" y="542" font-size="12" fill="#374151">2026-10-05</text>
+    <text x="190" y="542" font-size="12" fill="#374151">Macro</text>
+    <text x="310" y="542" font-size="12" fill="#374151">0002-8812/4</text>
+    <text x="440" y="542" font-size="12" fill="#374151">$ 85.000</text>
+    <text x="620" y="542" font-size="12" fill="#374151">Pago proveedor suministros</text>
+    <rect x="980" y="522" width="140" height="24" fill="#ffffff" stroke="#999"/>
+    <text x="995" y="539" font-size="11" fill="#374151">Posible duplicado</text>
+
+    <rect x="52" y="562" width="1236" height="52" fill="#ffffff" stroke="#d1d5db"/>
+    <text x="70" y="594" font-size="12" fill="#374151">2026-10-06</text>
+    <text x="190" y="594" font-size="12" fill="#374151">Santander</text>
+    <text x="310" y="594" font-size="12" fill="#374151">0003-1109/8</text>
+    <text x="440" y="594" font-size="12" fill="#374151">$ 34.500</text>
+    <text x="620" y="594" font-size="12" fill="#374151">Interfaz contable cobranzas</text>
+    <rect x="980" y="574" width="120" height="24" fill="#ffffff" stroke="#999"/>
+    <text x="1010" y="591" font-size="11" fill="#374151">Normal</text>
   </g>
 
-  <!-- Table -->
-  <g transform="translate(32,220)">
-    <rect class="table-head" x="0" y="0" width="1260" height="36" rx="2"/>
-    <g font-size="13" fill="#333"><text x="12" y="24">Sel</text><text x="60" y="24">Fecha</text><text x="180" y="24">Banco</text><text x="320" y="24">Cuenta</text><text x="520" y="24">Importe</text><text x="640" y="24">Concepto</text><text x="980" y="24">Estado</text></g>
+  <rect x="52" y="606" width="1236" height="52" fill="#f8fafc" stroke="#d1d5db"/>
+  <text x="72" y="633" font-size="12" fill="#475569">Estado de selección: Se confirmarán 4 movimientos seleccionados para envío a SAP.</text>
 
-    <g transform="translate(0,44)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="60" y="26">2026-10-05</text><text x="180" y="26">BNA</text><text x="320" y="26">0001-4920/1</text><text x="520" y="26">$120.000</text><text x="640" y="26">Pago proveedor</text><text x="980" y="26">Normal</text></g>
+  <rect x="54" y="680" width="114" height="34" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="72" y="702" font-size="12" fill="#374151">Volver</text>
 
-    <g transform="translate(0,96)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#f2dede"/><text x="12" y="26">[ ]</text><text x="60" y="26">2026-10-05</text><text x="180" y="26">Macro</text><text x="320" y="26">0002-8812/4</text><text x="520" y="26">$85.000</text><text x="640" y="26">Pago proveedor suministros</text><text x="980" y="26" class="warn">Posible duplicado</text></g>
-
-    <g transform="translate(0,148)'><rect x="0" y="0" width="1260" height="40" fill="#fff" stroke="#eee"/><text x="12" y="26">[x]</text><text x="60" y="26">2026-10-06</text><text x="180" y="26">Santander</text><text x="320" y="26">0003-1109/8</text><text x="520" y="26">$34.500</text><text x="640" y="26">Interfaz contable cobranzas</text><text x="980" y="26">Normal</text></g>
-
-    <g transform="translate(0,200)" fill="#999" font-size="12"><text x="12" y="20">...</text></g>
-  </g>
-
-  <!-- Banner + actions -->
-  <g transform="translate(32,520)">
-    <rect x="0" y="0" width="1260" height="48" rx="6" fill="#f0f8ff" stroke="#d0e6ff"/><text x="12" y="30" fill="#1f6feb">Se confirmaron 3 movimientos para envío a SAP</text>
-    <g transform="translate(0,72)"><rect class="btn-secondary" x="0" y="10" width="160" height="36" rx="6"/><text class="btn-secondary-text" x="24" y="34">Volver</text><rect class="btn-primary" x="220" y="10" width="200" height="36" rx="6"/><text class="btn-primary-text" x="280" y="34">Confirmar envío a SAP</text></g>
-  </g>
+  <rect x="1128" y="680" width="160" height="34" fill="#111827"/>
+  <text x="1160" y="702" font-size="12" font-weight="700" fill="#ffffff">Confirmar envío a SAP</text>
 </svg>
