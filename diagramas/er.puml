@@ -26,6 +26,7 @@ entity LotePago {
   --
   id_usuario_carga : integer <<FK>>
   nombre_archivo_original : varchar(255)
+  hash_archivo : varchar(64)
   fecha_carga : datetime
   estado_general : varchar(20)
 }
@@ -71,6 +72,7 @@ entity MovimientoBancario {
   tipo : varchar(10)
   estado : varchar(20)
   fecha_impacto_sap : datetime
+  numero_asiento_sap : varchar(50)
 }
 
 entity SocioNegocio {

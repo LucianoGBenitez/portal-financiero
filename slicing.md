@@ -411,7 +411,7 @@ verticales como en el ejemplo. Si creen que no hace falta partirla, justifiquen 
   **Criterios de aceptación**
 
   1. Una vez autenticado el usuario, el sistema contrasta su identificador de cuenta contra la tabla de cuentas autorizadas (`lista_blanca`).
-  2. Si la cuenta no está autorizada, se bloquea el acceso mostrando: "Cuenta no autorizada para operar en el Portal Financiero. Contacte al administrador de IT".
+  2. Si la cuenta no está autorizada, se bloquea el acceso mostrando el mismo mensaje genérico usado ante credenciales inválidas ("Usuario o contraseña incorrectos"), sin revelar que la cuenta existe pero no está autorizada — misma decisión de seguridad que el wireframe de login (ver `docs/diseño-ui.md`, Módulo 4), para evitar que alguien infiera qué cuentas corporativas existen.
   3. Los intentos de acceso con cuentas válidas pero no autorizadas generan un registro de seguridad en la bitácora con IP, usuario y fecha/hora.
 
   ---
